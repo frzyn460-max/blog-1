@@ -1,315 +1,577 @@
-<footer class="footer">
-  <div class="container">
-    <!-- بخش بالایی فوتر (بدون تغییر) -->
-    <div class="top-row">
-      <div class="footer-section">
-        <h4>دسترسی سریع</h4>
-        <ul class="footer-links">
-          <li><a href="#">درباره ما</a></li>
-          <li><a href="#">تماس با ما</a></li>
-          <li><a href="#">سوالات متداول</a></li>
-          <li><a href="#">قوانین و مقررات</a></li>
-        </ul>
-      </div>
+<?php
+/**
+ * فوتر سایت
+ * شامل لینک‌های مهم، اطلاعات تماس و شبکه‌های اجتماعی
+ */
 
-      <div class="footer-section">
-        <h4>ارتباط با ما</h4>
-        <ul class="contact-info">
-          <li>📞 ۰۹۱۲۱۲۳۴۵۶۷</li>
-          <li>✉️ frzyn460@gmail.com</li>
-          <li>📍همدان, ایران</li>
-        </ul>
-      </div>
+// دریافت سال جاری
+$current_year = date('Y');
+?>
 
-      <div class="footer-section">
-        <h4>عضویت در خبرنامه</h4>
-        <form class="newsletter">
-          <input type="email" placeholder="ایمیل خود را وارد کنید" required>
-          <button type="submit">عضویت</button>
-        </form>
-      </div>
+<footer class="main-footer">
+    <div class="footer-container">
+        
+        <!-- بخش بالایی فوتر -->
+        <div class="footer-top">
+            
+            <!-- ستون درباره ما -->
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <h3>📚 <?= escape(SITE_NAME) ?></h3>
+                </div>
+                <p class="footer-desc">
+                    بزرگترین فروشگاه آنلاین کتاب در ایران با بیش از 10,000 عنوان کتاب 
+                    در دسته‌بندی‌های مختلف. کیفیت، قیمت مناسب و ارسال سریع از ویژگی‌های ماست.
+                </p>
+                <div class="footer-badges">
+                    <div class="badge-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"/>
+                        </svg>
+                        <span>پرداخت امن</span>
+                    </div>
+                    <div class="badge-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18,18.5A1.5,1.5 0 0,1 16.5,17A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 19.5,17A1.5,1.5 0 0,1 18,18.5M19.5,9.5L21.46,12H17V9.5M6,18.5A1.5,1.5 0 0,1 4.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,17A1.5,1.5 0 0,1 6,18.5M20,8H17V4H3C1.89,4 1,4.89 1,6V17H3A3,3 0 0,0 6,20A3,3 0 0,0 9,17H15A3,3 0 0,0 18,20A3,3 0 0,0 21,17H23V12L20,8Z"/>
+                        </svg>
+                        <span>ارسال سریع</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ستون دسترسی سریع -->
+            <div class="footer-column">
+                <h4 class="footer-title">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                    </svg>
+                    دسترسی سریع
+                </h4>
+                <ul class="footer-links">
+                    <li><a href="index.php">🏠 صفحه اصلی</a></li>
+                    <li><a href="products.php">📦 محصولات</a></li>
+                    <li><a href="posts.php">📝 مقالات</a></li>
+                    <li><a href="about.php">ℹ️ درباره ما</a></li>
+                    <li><a href="contact.php">📞 تماس با ما</a></li>
+                </ul>
+            </div>
+
+            <!-- ستون راهنما -->
+            <div class="footer-column">
+                <h4 class="footer-title">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4M11,7V13H13V7H11M11,15V17H13V15H11Z"/>
+                    </svg>
+                    راهنما
+                </h4>
+                <ul class="footer-links">
+                    <li><a href="#">❓ سوالات متداول</a></li>
+                    <li><a href="#">📋 قوانین و مقررات</a></li>
+                    <li><a href="#">🔒 حریم خصوصی</a></li>
+                    <li><a href="#">💳 نحوه خرید</a></li>
+                    <li><a href="#">🚚 رویه ارسال</a></li>
+                </ul>
+            </div>
+
+            <!-- ستون تماس با ما -->
+            <div class="footer-column">
+                <h4 class="footer-title">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/>
+                    </svg>
+                    ارتباط با ما
+                </h4>
+                <ul class="footer-contact">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/>
+                        </svg>
+                        <span dir="ltr">021-1234567</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
+                        </svg>
+                        <span>info@ketabnet.ir</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/>
+                        </svg>
+                        <span>تهران، خیابان ولیعصر</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- خط جداکننده -->
+        <div class="footer-divider"></div>
+
+        <!-- بخش پایین فوتر -->
+        <div class="footer-bottom">
+            
+            <!-- شبکه‌های اجتماعی -->
+            <div class="social-section">
+                <span class="social-title">ما را دنبال کنید:</span>
+                <div class="social-icons">
+                    <a href="#" class="social-link instagram" aria-label="اینستاگرام">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link telegram" aria-label="تلگرام">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9.78,18.65L10.06,14.42L17.74,7.5C18.08,7.19 17.67,7.04 17.22,7.31L7.74,13.3L3.64,12C2.76,11.75 2.75,11.14 3.84,10.7L19.81,4.54C20.54,4.21 21.24,4.72 20.96,5.84L18.24,18.65C18.05,19.56 17.5,19.78 16.74,19.36L12.6,16.3L10.61,18.23C10.38,18.46 10.19,18.65 9.78,18.65Z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link twitter" aria-label="توییتر">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.70,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link youtube" aria-label="یوتیوب">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- متن کپی‌رایت -->
+            <div class="copyright">
+                <p>
+                    © <?= $current_year ?> 
+                    <strong><?= escape(SITE_NAME) ?></strong> 
+                    - تمامی حقوق محفوظ است
+                </p>
+                <p class="developer">
+                    طراحی و توسعه با 
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/>
+                    </svg>
+                    توسط تیم برنامه‌نویسی
+                </p>
+            </div>
+
+            <!-- نمادها -->
+            <div class="footer-logos">
+                <div class="logo-placeholder">
+                    <span>🏆</span>
+                </div>
+                <div class="logo-placeholder">
+                    <span>✅</span>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
-    <!-- بخش پایین فوتر -->
-    <div class="bottom-row">
-      <!-- سمت چپ واقعی: دو اسلات برای لوگو -->
-      <div class="footer-logo-container">
-        <div class="logo-slot">
-          <!-- جایگاه لوگوی اول -->
-          <!-- مثال: <img src="logo1.svg" alt="لوگو ۱"> -->
-        </div>
-        <div class="logo-slot">
-          <!-- جایگاه لوگوی دوم -->
-          <!-- مثال: <svg>...</svg> -->
-           
-        </div>
-      </div>
-
-      <!-- وسط: متن کپی‌رایت -->
-      <div class="footer-text">
-        <p>کلیه حقوق این سایت محفوظ است &copy; <span id="year"></span> وب‌لاگ</p>
-      </div>
-
-      <!-- سمت راست واقعی: شبکه‌های اجتماعی -->
-      <div class="social-icons">
-        <!-- <a href="#" aria-label="اینستاگرام">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.265.058 2.134.268 2.923.58 1.04.41 1.79 1.16 2.2 2.2.312.789.522 1.658.58 2.923.058 1.265.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.058 1.265-.268 2.134-.58 2.923-.41 1.04-1.16 1.79-2.2 2.2-.789.312-1.658.522-2.923.58-1.265.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.265-.058-2.134-.268-2.923-.58-1.04-.41-1.79-1.16-2.2-2.2-.312-.789-.522-1.658-.58-2.923-.058-1.265-.07-1.645-.07-4.85s.012-3.584.07-4.85c.058-1.265.268-2.134.58-2.923.41-1.04 1.16-1.79 2.2-2.2.789-.312 1.658-.522 2.923-.58 1.265-.058 1.645-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.277.058-2.148.27-2.933.578-.787.31-1.459.824-2.126 1.492-.666.666-1.18 1.338-1.492 2.126-.308.785-.52 1.656-.578 2.933-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.058 1.277.27 2.148.578 2.933.31.787.824 1.459 1.492 2.126.666.666 1.338 1.18 2.126 1.492.785.308 1.656.52 2.933.578 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.277-.058 2.148-.27 2.933-.578.787-.31 1.459-.824 2.126-1.492.666-.666 1.18-1.338 1.492-2.126.308-.785.52-1.656.578-2.933.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.058-1.277-.27-2.148-.578-2.933-.31-.787-.824-1.459-1.492-2.126-.666-.666-1.338-1.18-2.126-1.492-.785-.308-1.656-.52-2.933-.578-1.28-.058-1.688-.072-4.947-.072z"/>
-            <circle cx="12" cy="7.5" r="2.5"/>
-          </svg>
-        </a>
-        <a href="#" aria-label="تلگرام">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.941 7.447l-2.431 12.553-1.382-4.153-5.532 3.94 1.338-5.359-3.392-2.602 7.198 5.278 4.241-4.357z"/>
-          </svg>
-        </a>
-        <a href="#" aria-label="واتس‌اپ">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-        </a> -->
-      </div>
-    </div>
-  </div>
+    <!-- دکمه بازگشت به بالا -->
+    <button id="backToTop" class="back-to-top" aria-label="بازگشت به بالا">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"/>
+        </svg>
+    </button>
 </footer>
 
+<style>
+    /* ===== استایل فوتر ===== */
+    .main-footer {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: #e0e2e7;
+        margin-top: 5rem;
+        padding: 3rem 1.5rem 2rem;
+        border-radius: 30px 30px 0 0;
+        position: relative;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .footer-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* بخش بالایی */
+    .footer-top {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .footer-column {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    /* لوگو و توضیحات */
+    .footer-logo h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-desc {
+        color: #9ca3af;
+        line-height: 1.8;
+        font-size: 0.95rem;
+    }
+
+    /* نشان‌ها */
+    .footer-badges {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .badge-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.7rem 1rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .badge-item svg {
+        width: 20px;
+        height: 20px;
+        color: #10b981;
+    }
+
+    /* عنوان ستون‌ها */
+    .footer-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-title svg {
+        width: 24px;
+        height: 24px;
+        color: #667eea;
+    }
+
+    /* لینک‌ها */
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .footer-links a {
+        color: #9ca3af;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.95rem;
+        position: relative;
+        padding-right: 0;
+    }
+
+    .footer-links a::before {
+        content: '';
+        position: absolute;
+        right: -20px;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #667eea, transparent);
+        transition: width 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: #fff;
+        transform: translateX(-5px);
+    }
+
+    .footer-links a:hover::before {
+        width: 15px;
+    }
+
+    /* اطلاعات تماس */
+    .footer-contact {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .footer-contact li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #9ca3af;
+        font-size: 0.95rem;
+    }
+
+    .footer-contact svg {
+        width: 20px;
+        height: 20px;
+        color: #667eea;
+        flex-shrink: 0;
+    }
+
+    /* خط جداکننده */
+    .footer-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        margin: 2rem 0;
+    }
+
+    /* بخش پایین */
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    /* شبکه‌های اجتماعی */
+    .social-section {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .social-title {
+        font-weight: 600;
+        color: #fff;
+        font-size: 1rem;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .social-link {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+    .social-link svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .social-link:hover {
+        transform: translateY(-5px) rotate(5deg);
+    }
+
+    .instagram:hover {
+        background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+        box-shadow: 0 8px 20px rgba(221, 42, 123, 0.4);
+    }
+
+    .telegram:hover {
+        background: linear-gradient(135deg, #0088cc, #229ed9);
+        box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
+    }
+
+    .twitter:hover {
+        background: linear-gradient(135deg, #1da1f2, #0d8bd9);
+        box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
+    }
+
+    .youtube:hover {
+        background: linear-gradient(135deg, #ff0000, #cc0000);
+        box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+    }
+
+    /* کپی‌رایت */
+    .copyright {
+        text-align: center;
+        flex: 1;
+    }
+
+    .copyright p {
+        color: #9ca3af;
+        font-size: 0.9rem;
+        margin: 0.3rem 0;
+    }
+
+    .copyright strong {
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .developer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 0.85rem !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .developer svg {
+        width: 16px;
+        height: 16px;
+        color: #ef4444;
+        animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+
+    /* نمادها */
+    .footer-logos {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .logo-placeholder {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 1.5rem;
+    }
+
+    /* دکمه بازگشت به بالا */
+    .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        width: 55px;
+        height: 55px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+    .back-to-top:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+    }
+
+    .back-to-top.show {
+        display: flex;
+    }
+
+    .back-to-top svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* ===== Dark Mode ===== */
+    body.dark-mode .main-footer {
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1c3a 100%);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 991px) {
+        .footer-top {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .social-section {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-logos {
+            justify-content: center;
+        }
+
+        .back-to-top {
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .main-footer {
+            padding: 2rem 1rem 1.5rem;
+        }
+
+        .footer-top {
+            gap: 1.5rem;
+        }
+
+        .footer-badges {
+            flex-direction: column;
+        }
+
+        .social-icons {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+</style>
+
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+    // اسکریپت دکمه بازگشت به بالا
+    document.addEventListener('DOMContentLoaded', () => {
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        // نمایش/مخفی کردن دکمه
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        // اسکرول به بالا با انیمیشن
+        backToTopBtn?.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
 </script>
 
-<style>
- @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
-
-.footer {
-  background: linear-gradient(135deg, #1a1c20, #2a2d33);
-  color: #e0e2e7;
-  padding: 3rem 1rem 2rem;
-  border-top: 3px solid #007bff;
-  direction: rtl;
-  border-radius: 16px;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
-  margin-top: 2rem;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* --- سبک‌های بالایی بدون تغییر --- */
-.footer h4 {
-  margin-bottom: 1rem;
-  color: #ffffff;
-  font-size: 1.25rem;
-  border-right: 4px solid #007bff;
-  padding-right: 0.6rem;
-  position: relative;
-}
-.footer h4::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  right: 0;
-  width: 30px;
-  height: 2px;
-  background: #007bff;
-  opacity: 0.6;
-}
-.footer-links, .contact-info {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  line-height: 2.1;
-}
-.footer-links a {
-  color: #bbbbbb;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  padding-right: 4px;
-}
-.footer-links a::after {
-  content: '';
-  position: absolute;
-  bottom: 2px;
-  right: 0;
-  width: 0;
-  height: 1px;
-  background: #00bfff;
-  transition: width 0.3s ease;
-}
-.footer-links a:hover {
-  color: #00d1ff;
-}
-.footer-links a:hover::after {
-  width: 100%;
-}
-.contact-info li {
-  color: #dddddd;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.top-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2.5rem;
-  justify-content: space-between;
-  margin-bottom: 2.5rem;
-}
-.footer-section {
-  flex: 1;
-  min-width: 250px;
-}
-.newsletter input[type="email"] {
-  padding: 0.85rem;
-  border: none;
-  border-radius: 10px;
-  width: 100%;
-  font-family: inherit;
-  background-color: #383c42;
-  color: #ffffff;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-.newsletter input::placeholder {
-  color: #aaa;
-}
-.newsletter button {
-  margin-top: 0.8rem;
-  padding: 0.85rem;
-  border: none;
-  background: linear-gradient(to right, #007bff, #00a0ff);
-  color: white;
-  font-weight: bold;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  font-family: inherit;
-  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
-}
-.newsletter button:hover {
-  background: linear-gradient(to right, #0069d9, #0088cc);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 10px rgba(0, 123, 255, 0.4);
-}
-
-/* --- بخش پایین فوتر: سمت چپ = لوگوها --- */
-.bottom-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 1.8rem;
-  /* مهم: direction را به ltr تنظیم می‌کنیم تا چپ و راست واقعی رعایت شود */
-  direction: ltr;
-}
-
-.footer-logo-container {
-  display: flex;
-  gap: 12px;
-  /* این سمت چپ واقعی صفحه است */
-}
-
-.logo-slot {
-  width: 60px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  overflow: hidden; /* جلوگیری از سرریز لوگو */
-  transition: background-color 0.2s;
-}
-
-.logo-slot:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* لوگوهای داخل اسلات: اندازه مناسب */
-.logo-slot img,
-.logo-slot svg {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.footer-text {
-  text-align: center;
-  direction: rtl; /* متن فارسی */
-  white-space: nowrap;
-}
-
-.footer-text p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #cccccc;
-}
-
-.social-icons {
-  display: flex;
-  gap: 1rem;
-  /* این سمت راست واقعی است */
-}
-
-.social-icons a {
-  background: rgba(58, 59, 60, 0.7);
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.35s ease;
-  color: #ffffff;
-  backdrop-filter: blur(2px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  flex-shrink: 0;
-}
-
-.social-icons a:hover {
-  background: linear-gradient(135deg, #1e90ff, #00bfff);
-  transform: scale(1.15);
-  color: white;
-  box-shadow: 0 4px 12px rgba(30, 144, 255, 0.4);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .top-row {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .bottom-row {
-    flex-direction: column;
-    text-align: center;
-    gap: 1.2rem;
-    direction: rtl;
-  }
-
-  .footer-logo-container,
-  .social-icons {
-    order: 1;
-  }
-
-  .footer-text {
-    order: 2;
-    width: 100%;
-    margin: 0.5rem 0;
-    direction: rtl;
-  }
-
-  .footer-section {
-    text-align: center;
-    width: 100%;
-  }
-
-  .newsletter input,
-  .newsletter button {
-    width: 100%;
-  }
-}
-</style>
+</body>
+</html>

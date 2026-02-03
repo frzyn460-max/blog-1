@@ -1,571 +1,1046 @@
 <?php
-include("./include/header.php");
+/**
+ * صفحه اصلی سایت
+ * نمایش محصولات و مقالات
+ */
 
-if (isset($_GET['category'])) {
-  $category_id = $_GET['category'];
-  $posts = $db->prepare(query: 'SELECT * FROM posts WHERE category_id = :id LIMIT 4');
-  $posts->execute(params: ['id' => $category_id]);
-  $products = $db->prepare('SELECT * FROM product WHERE category_id = :id LIMIT 3');
-  $products->execute(['id' => $category_id]);
+// فراخوانی هدر
+require_once("./include/header.php");
+
+// دریافت دسته‌بندی (اگر انتخاب شده)
+$category_id = isset($_GET['category']) ? filter_var($_GET['category'], FILTER_VALIDATE_INT) : null;
+
+// دریافت محصولات و مقالات به صورت امن
+if ($category_id) {
+    $posts = fetchAll($db, 'SELECT * FROM posts WHERE category_id = ? ORDER BY id DESC LIMIT 4', [$category_id]);
+    $products = fetchAll($db, 'SELECT * FROM product WHERE category_id = ? ORDER BY id DESC LIMIT 6', [$category_id]);
 } else {
-  $posts = $db->query("SELECT * FROM posts LIMIT 4");
-  $products = $db->query("SELECT * FROM product LIMIT 6");
+    $posts = fetchAll($db, "SELECT * FROM posts ORDER BY id DESC LIMIT 4");
+    $products = fetchAll($db, "SELECT * FROM product ORDER BY id DESC LIMIT 6");
 }
 
-?>
-<section class="hero">
-  <div class="container">
-    <div class="hero-container">
-      <div class="hero-content">
-        <h1 class="hero-title">
-          با هم، برای<br>
-          <span> کتاب نت , منبع انواع کتاب ها</span>
-        </h1>
-        <p>
-           کتاب نت, مجموعه‌ای متنوع از کتاب های مختلف در اختیار شماست.
-          با جستجو در سایت،
-          <br> به انواع کتاب ها ها دسترسی پیدا کنید.
-        </p>
-      </div>
+// تابع کمکی برای کوتاه کردن متن
+function truncateText($text, $length = 150) {
+    $text = strip_tags($text);
+    return mb_strlen($text) > $length ? mb_substr($text, 0, $length) . '...' : $text;
+}
 
-      <div class="hero-book">
-        <img src="./img/25.jpg" alt="کتاب" class="hero-book-image">
-      </div>
+// تابع کمکی برای فرمت قیمت
+function formatPrice($price) {
+    return number_format($price) . ' تومان';
+}
+?>
+
+<!-- بخش هیرو -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-wrapper">
+            
+            <!-- محتوای متنی -->
+            <div class="hero-content" data-aos="fade-left">
+                <span class="hero-badge">🎉 بهترین قیمت‌ها</span>
+                <h1 class="hero-title">
+                    دنیای <span class="gradient-text">کتاب</span> 
+                    <br>در یک کلیک
+                </h1>
+                <p class="hero-desc">
+                    بیش از <strong>10,000</strong> عنوان کتاب در دسته‌بندی‌های مختلف
+                    <br>
+                    با بهترین کیفیت و قیمت مناسب
+                </p>
+                <div class="hero-buttons">
+                    <a href="products.php" class="btn-primary">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+                        </svg>
+                        مشاهده محصولات
+                    </a>
+                    <a href="#posts-section" class="btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                        </svg>
+                        مقالات آموزشی
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <strong>10K+</strong>
+                        <span>کتاب</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <strong>5K+</strong>
+                        <span>کاربر فعال</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <strong>24/7</strong>
+                        <span>پشتیبانی</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تصویر -->
+            <div class="hero-image" data-aos="fade-right">
+                <div class="image-wrapper">
+                    <img src="./img/25.jpg" alt="کتاب" class="main-image">
+                    <div class="floating-card card-1">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M5,3C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3H5M5,5H19V19H5V5M7,7V9H17V7H7M7,11V13H17V11H7M7,15V17H14V15H7Z"/>
+                        </svg>
+                        <div>
+                            <strong>تخفیف ویژه</strong>
+                            <span>تا 50%</span>
+                        </div>
+                    </div>
+                    <div class="floating-card card-2">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18,18.5A1.5,1.5 0 0,1 16.5,17A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 19.5,17A1.5,1.5 0 0,1 18,18.5M19.5,9.5L21.46,12H17V9.5M6,18.5A1.5,1.5 0 0,1 4.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,17A1.5,1.5 0 0,1 6,18.5M20,8H17V4H3C1.89,4 1,4.89 1,6V17H3A3,3 0 0,0 6,20A3,3 0 0,0 9,17H15A3,3 0 0,0 18,20A3,3 0 0,0 21,17H23V12L20,8Z"/>
+                        </svg>
+                        <div>
+                            <strong>ارسال رایگان</strong>
+                            <span>برای خرید بالای 200 هزار</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
 </section>
 
-<div class="page-wrapper">
-  <section class="main-content">
-    <section class="products-section">
-      <div class="container-fluid">
-        <h1 class="section-title">محصولات</h1>
-        <div class="products-grid">
-          <?php
-          if ($products->rowCount() > 0) {
-            foreach ($products as $product) {
-              $cat_id = $product['category_id'];
-              $product_category = $db->query("SELECT * FROM categories WHERE id=$cat_id")->fetch();
-              ?>
-              <article class="product-card">
-                <img src="./upload/products/<?php echo htmlspecialchars($product['pic']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-image" />
-                <div class="product-body">
-                  <header class="product-header">
-                    <h3 class="product-name"><?php echo htmlspecialchars($product['name']); ?></h3>
-                    <span class="product-category"><?php echo htmlspecialchars($product_category['title']); ?></span>
-                  </header>
-                  <p class="product-price">
-                    قیمت:
-                    <span class="old-price"><?php echo number_format($product['price']); ?> تومان</span>
-                    <span class="new-price"><?php echo number_format($product['new-price']); ?> تومان</span>
-                  </p>
-                  <a href="single_product.php?product=<?php echo $product['id']; ?>" class="btn-view-post">خرید محصول</a>
+<!-- کانتینر اصلی -->
+<div class="main-wrapper">
+    
+    <!-- محتوای اصلی -->
+    <main class="main-content">
+        
+        <!-- بخش محصولات -->
+        <section class="section products-section">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-title-wrapper">
+                    <svg class="section-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17,18A2,2 0 0,1 19,20A2,2 0 0,1 17,22C15.89,22 15,21.1 15,20C15,18.89 15.89,18 17,18M1,2H4.27L5.21,4H20A1,1 0 0,1 21,5C21,5.17 20.95,5.34 20.88,5.5L17.3,11.97C16.96,12.58 16.3,13 15.55,13H8.1L7.2,14.63L7.17,14.75A0.25,0.25 0 0,0 7.42,15H19V17H7C5.89,17 5,16.1 5,15C5,14.65 5.09,14.32 5.24,14.04L6.6,11.59L3,4H1V2M7,18A2,2 0 0,1 9,20A2,2 0 0,1 7,22C5.89,22 5,21.1 5,20C5,18.89 5.89,18 7,18M16,11L18.78,6H6.14L8.5,11H16Z"/>
+                    </svg>
+                    <h2 class="section-title">محصولات ویژه</h2>
                 </div>
-              </article>
-            <?php
-            }
-          } else {
-            echo "<div class='no-products-alert'>محصولی یافت نشد!</div>";
-          }
-          ?>
-        </div>
-      </div>
-    </section>
+                <a href="products.php" class="view-all-link">
+                    مشاهده همه
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
+                    </svg>
+                </a>
+            </div>
 
-    <section class="posts-section">
-      <div class="container-fluid">
-        <h1 class="section-title">مقالات</h1>
-        <div class="posts-grid">
-          <?php
-          if ($posts->rowCount() > 0) {
-            foreach ($posts as $post) {
-              $category_id = $post['category_id'];
-              $post_category = $db->query("SELECT * FROM categories WHERE id=$category_id")->fetch();
-              ?>
-              <article class="post-card">
-                <img src="./upload/posts/<?php echo htmlspecialchars($post['image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" class="post-image" />
-                <div class="post-body">
-                  <header class="post-header">
-                    <h2 class="post-title"><?php echo htmlspecialchars($post['title']); ?></h2>
-                    <span class="post-category"><?php echo htmlspecialchars($post_category['title']); ?></span>
-                  </header>
-                  <p class="post-excerpt">
-                    <?php echo mb_substr($post['body'], 0, 500) . "..."; ?>
-                  </p>
-                  <footer class="post-footer">
-                    <a href="single.php?post=<?php echo $post['id']; ?>" class="btn-view-post">مشاهده</a>
-                    <p class="post-author">نویسنده : <?php echo htmlspecialchars($post['author']); ?></p>
-                  </footer>
+            <div class="products-grid">
+                <?php if (!empty($products)): ?>
+                    <?php foreach ($products as $index => $product): ?>
+                        <?php
+                        $product_category = fetchOne($db, "SELECT title FROM categories WHERE id = ?", [$product['category_id']]);
+                        ?>
+                        <article class="product-card" data-aos="fade-up" data-aos-delay="<?= $index * 100 ?>">
+                            <div class="product-image-wrapper">
+                                <img src="./upload/products/<?= escape($product['pic']) ?>" 
+                                     alt="<?= escape($product['name']) ?>" 
+                                     class="product-image"
+                                     loading="lazy">
+                                <div class="product-badges">
+                                    <?php if ($product['price'] != $product['new-price']): ?>
+                                        <?php 
+                                        $discount = round((($product['price'] - $product['new-price']) / $product['price']) * 100);
+                                        ?>
+                                        <span class="badge discount-badge"><?= $discount ?>% تخفیف</span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="product-overlay">
+                                    <a href="single_product.php?product=<?= $product['id'] ?>" class="quick-view">
+                                        مشاهده سریع
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-category">
+                                    <?= escape($product_category['title'] ?? 'نامشخص') ?>
+                                </span>
+                                <h3 class="product-name">
+                                    <a href="single_product.php?product=<?= $product['id'] ?>">
+                                        <?= escape($product['name']) ?>
+                                    </a>
+                                </h3>
+                                <div class="product-pricing">
+                                    <?php if ($product['price'] != $product['new-price']): ?>
+                                        <span class="old-price"><?= formatPrice($product['price']) ?></span>
+                                    <?php endif; ?>
+                                    <span class="new-price"><?= formatPrice($product['new-price']) ?></span>
+                                </div>
+                                <a href="single_product.php?product=<?= $product['id'] ?>" class="btn-add-cart">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M17,18A2,2 0 0,1 19,20A2,2 0 0,1 17,22C15.89,22 15,21.1 15,20C15,18.89 15.89,18 17,18M1,2H4.27L5.21,4H20A1,1 0 0,1 21,5C21,5.17 20.95,5.34 20.88,5.5L17.3,11.97C16.96,12.58 16.3,13 15.55,13H8.1L7.2,14.63L7.17,14.75A0.25,0.25 0 0,0 7.42,15H19V17H7C5.89,17 5,16.1 5,15C5,14.65 5.09,14.32 5.24,14.04L6.6,11.59L3,4H1V2M7,18A2,2 0 0,1 9,20A2,2 0 0,1 7,22C5.89,22 5,21.1 5,20C5,18.89 5.89,18 7,18M16,11L18.78,6H6.14L8.5,11H16Z"/>
+                                    </svg>
+                                    افزودن به سبد
+                                </a>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="no-data-message">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/>
+                        </svg>
+                        <h3>محصولی یافت نشد!</h3>
+                        <p>در حال حاضر محصولی در این دسته‌بندی وجود ندارد.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
+
+        <!-- بخش مقالات -->
+        <section id="posts-section" class="section posts-section">
+            <div class="section-header" data-aos="fade-up">
+                <div class="section-title-wrapper">
+                    <svg class="section-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19,5V7H15V5H19M9,5V11H5V5H9M19,13V19H15V13H19M9,17V19H5V17H9M21,3H13V9H21V3M11,3H3V13H11V3M21,11H13V21H21V11M11,15H3V21H11V15Z"/>
+                    </svg>
+                    <h2 class="section-title">جدیدترین مقالات</h2>
                 </div>
-              </article>
-            <?php
-            }
-          } else {
-            ?>
-            <div class='no-posts-alert'>مقاله مورد نظر پیدا نشد!</div>
-          <?php } ?>
-        </div>
-      </div>
-    </section>
-  </section>
+                <a href="posts.php" class="view-all-link">
+                    مشاهده همه
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
+                    </svg>
+                </a>
+            </div>
 
-  <div class="sidebar">
-    <?php include("./include/sidebar.php") ?>
-  </div>
+            <div class="posts-grid">
+                <?php if (!empty($posts)): ?>
+                    <?php foreach ($posts as $index => $post): ?>
+                        <?php
+                        $post_category = fetchOne($db, "SELECT title FROM categories WHERE id = ?", [$post['category_id']]);
+                        ?>
+                        <article class="post-card" data-aos="fade-up" data-aos-delay="<?= $index * 100 ?>">
+                            <div class="post-image-wrapper">
+                                <img src="./upload/posts/<?= escape($post['image']) ?>" 
+                                     alt="<?= escape($post['title']) ?>" 
+                                     class="post-image"
+                                     loading="lazy">
+                                <span class="post-category-badge">
+                                    <?= escape($post_category['title'] ?? 'نامشخص') ?>
+                                </span>
+                            </div>
+                            <div class="post-content">
+                                <h3 class="post-title">
+                                    <a href="single.php?post=<?= $post['id'] ?>">
+                                        <?= escape($post['title']) ?>
+                                    </a>
+                                </h3>
+                                <p class="post-excerpt">
+                                    <?= escape(truncateText($post['body'], 120)) ?>
+                                </p>
+                                <div class="post-footer">
+                                    <div class="post-author">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                                        </svg>
+                                        <?= escape($post['author']) ?>
+                                    </div>
+                                    <a href="single.php?post=<?= $post['id'] ?>" class="read-more">
+                                        ادامه مطلب
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="no-data-message">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z"/>
+                        </svg>
+                        <h3>مقاله‌ای یافت نشد!</h3>
+                        <p>در حال حاضر مقاله‌ای در این دسته‌بندی وجود ندارد.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- سایدبار -->
+    <aside class="sidebar">
+        <?php require_once("./include/sidebar.php"); ?>
+    </aside>
+
 </div>
 
-<?php include("./include/footer.php") ?>
+<?php require_once("./include/footer.php"); ?>
 
 <style>
-* {
-  font-family: tanha;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  direction: rtl;
-}
-
-body {
-  background-color: #f3f3f3ff;
-  color: #222;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-/* ====== DARK MODE ====== */
-body.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-body.dark-mode .hero {
-  background-color: #1e1e1e;
-  box-shadow: 5px 5px 10px #0040b0;
-}
-
-body.dark-mode .section-title {
-  color: #f0f0f0;
-}
-
-body.dark-mode .section-title::before,
-body.dark-mode .section-title::after {
-  background-color: #444;
-}
-
-body.dark-mode .product-card,
-body.dark-mode .post-card {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  border: 1px solid #252525ff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .product-card:hover,
-body.dark-mode .post-card:hover {
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-body.dark-mode .product-name,
-body.dark-mode .post-title {
-  color: #f0f0f0;
-}
-
-body.dark-mode .product-price,
-body.dark-mode .post-excerpt,
-body.dark-mode .post-author {
-  color: #bbb;
-}
-
-body.dark-mode .old-price {
-  color: #888;
-}
-
-body.dark-mode .new-price {
-  color: #ff6b6b;
-}
-
-body.dark-mode .btn-view-post {
-  border-color: #4da6ff;
-  color: #4da6ff;
-}
-
-body.dark-mode .btn-view-post:hover {
-  background-color: #4da6ff;
-  color: #fff;
-}
-
-body.dark-mode .product-category {
-  background-color: #2e7d32;
-}
-
-body.dark-mode .post-category {
-  background-color: #5a6268;
-}
-
-body.dark-mode .no-posts-alert,
-body.dark-mode .no-products-alert {
-  background-color: #3d2a2e;
-  color: #f8d7da;
-  border-color: #721c24;
-}
-
-/* Sidebar in dark mode */
-body.dark-mode .sidebar {
-  background-color: transparent; /* مهم: شفاف کردن والد */
-}
-
-body.dark-mode aside.sidebar {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  border: 1px solid #333;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-body.dark-mode .sidebar a,
-body.dark-mode .sidebar h3,
-body.dark-mode .sidebar ul li {
-  color: #ccc;
-}
-
-body.dark-mode .sidebar a:hover {
-  color: #4da6ff;
-}
-
-/* ====== LIGHT MODE (DEFAULT) ====== */
-.hero {
-  color: #fff;
-  box-shadow: 5px 5px 10px #0059ff;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-top: 80px;
-  padding-bottom: 50px;
-  border-radius: 32px;
-  background-color: #362f2f;
-}
-
-.hero-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.hero-content {
-  flex: 1 1 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 15px;
-  padding: 20px;
-}
-
-.hero-title {
-  font-size: 36px;
-  line-height: 1.4;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.hero-title span {
-  color: rgb(0, 140, 255);
-}
-
-.hero-book {
-  flex: 1 1 40%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.hero-book-image {
-  max-width: 280px;
-  width: 100%;
-  height: auto;
-  border-radius: 16px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-.page-wrapper {
-  display: flex;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 10px;
-  gap: 20px;
-  margin-top: 80px;
-  align-items: flex-start; /* مهم: جلوگیری از کشیده شدن سایدبار به پایین */
-}
-
-.sidebar {
-  /* بدون padding یا margin اضافی */
-  align-self: flex-start; /* مهم: سایدبار از بالا شروع شود و به پایین کشیده نشود */
-}
-
-aside.sidebar {
-  flex: 0 0 280px;
-  background-color: #f1f1f1;
-  border-radius: 6px;
-  padding: 20px;
-  height: fit-content;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-.section-title {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #222;
-  margin-bottom: 1rem;
-  padding-right: 10px;
-  padding-top: 50px;
-  padding-bottom: 15px;
-  text-align: center;
-}
-
-.section-title::before,
-.section-title::after {
-  content: "";
-  flex: 1;
-  height: 2px;
-  background-color: #e2e2e2ff;
-  margin: 0 12px;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.product-card {
-  background: #f8f8f8;
-  border-radius: 8px;
-  border: 1px solid #ecececff;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-}
-
-.product-image {
-  width: 100%;
-  height: 70%;
-  object-fit: cover;
-  border-bottom: 1px solid #ddd;
-}
-
-.product-body {
-  padding: 15px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.product-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.product-name {
-  font-size: 1.1rem;
-  color: #333;
-  flex: 1;
-  line-height: 1.2;
-}
-
-.product-category {
-  background-color: #28a745;
-  color: white;
-  padding: 3px 10px;
-  font-size: 0.8rem;
-  border-radius: 12px;
-  white-space: nowrap;
-  margin-left: 10px;
-}
-
-.product-price {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.old-price {
-  text-decoration: line-through;
-  color: #999;
-  margin-left: 10px;
-}
-
-.new-price {
-  color: #e63946;
-  font-weight: bold;
-}
-
-.btn-view-post {
-  background-color: transparent;
-  border: 2px solid #007bff;
-  color: #007bff;
-  padding: 6px 18px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  user-select: none;
-  display: inline-block;
-  text-align: center;
-  align-self: center;
-}
-
-.btn-view-post:hover {
-  background-color: #007bff;
-  color: white;
-}
-
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.post-card {
-  background: #f8f8f8;
-  border-radius: 8px;
-  border: 1px solid #ecececff;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: box-shadow 0.3s ease;
-  position: relative;
-}
-
-.post-card:hover {
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-}
-
-.post-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 1px solid #ddd;
-}
-
-.post-body {
-  padding: 15px 20px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.post-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.post-title {
-  font-size: 1.2rem;
-  margin: 0;
-  color: #222;
-  flex: 1;
-  line-height: 1.3;
-}
-
-.post-category {
-  background-color: #6c757d;
-  color: white;
-  padding: 3px 10px;
-  font-size: 0.8rem;
-  border-radius: 12px;
-  white-space: nowrap;
-  margin-left: 10px;
-}
-
-.post-excerpt {
-  flex-grow: 1;
-  font-size: 0.95rem;
-  color: #555;
-  text-align: justify;
-  margin-bottom: 15px;
-}
-
-.post-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.post-author {
-  font-size: 0.9rem;
-  color: #666;
-  white-space: nowrap;
-}
-
-.no-posts-alert,
-.no-products-alert {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-  padding: 15px 20px;
-  border-radius: 6px;
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-@media (max-width: 991px) {
-  .page-wrapper {
-    flex-direction: column;
-    padding: 10px 5px;
-    margin-top: 80px;
-  }
-
-  .sidebar {
-    align-self: auto;
-  }
-
-  aside.sidebar {
-    flex: 1 0 auto;
-    margin-bottom: 20px;
-  }
-
-  .main-content {
-    width: 100%;
-  }
-
-  .products-grid,
-  .posts-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-
-  .hero-container {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-book {
-    margin-top: 20px;
-  }
-}
+    /* ===== تنظیمات پایه ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Vazirmatn', Tahoma, sans-serif;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* ===== بخش هیرو ===== */
+    .hero-section {
+        padding: 8rem 0 4rem;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        margin-bottom: 4rem;
+    }
+
+    .hero-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.5rem 1.2rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        animation: bounceIn 1s ease;
+    }
+
+    @keyframes bounceIn {
+        0% { transform: scale(0); opacity: 0; }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+    }
+
+    .hero-desc strong {
+        color: var(--accent-primary);
+        font-weight: 700;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 1rem 2rem;
+        border-radius: 15px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--text-primary);
+        border: 2px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+        background: var(--bg-primary);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary svg, .btn-secondary svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .hero-stats {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        padding: 1.5rem;
+        background: var(--bg-primary);
+        border-radius: 20px;
+        box-shadow: var(--shadow-md);
+    }
+
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat-item strong {
+        font-size: 1.8rem;
+        color: var(--accent-primary);
+        font-weight: 800;
+    }
+
+    .stat-item span {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .stat-divider {
+        width: 1px;
+        height: 40px;
+        background: var(--border-color);
+    }
+
+    /* تصویر هیرو */
+    .hero-image {
+        position: relative;
+    }
+
+    .image-wrapper {
+        position: relative;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .main-image {
+        width: 100%;
+        max-width: 450px;
+        border-radius: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .main-image:hover {
+        transform: scale(1.05);
+    }
+
+    .floating-card {
+        position: absolute;
+        background: var(--bg-primary);
+        padding: 1rem 1.5rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        animation: floatCard 4s ease-in-out infinite;
+    }
+
+    @keyframes floatCard {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+
+    .floating-card svg {
+        width: 40px;
+        height: 40px;
+        color: var(--accent-primary);
+        flex-shrink: 0;
+    }
+
+    .floating-card strong {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+    }
+
+    .floating-card span {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+
+    .card-1 {
+        top: 10%;
+        left: -10%;
+    }
+
+    .card-2 {
+        bottom: 15%;
+        right: -10%;
+        animation-delay: 2s;
+    }
+
+    /* ===== کانتینر اصلی ===== */
+    .main-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1.5rem 4rem;
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 3rem;
+        align-items: start;
+    }
+
+    /* ===== بخش‌ها ===== */
+    .section {
+        margin-bottom: 4rem;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .section-title-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .section-icon {
+        width: 35px;
+        height: 35px;
+        color: var(--accent-primary);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+    }
+
+    .view-all-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--accent-primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .view-all-link:hover {
+        gap: 0.8rem;
+    }
+
+    .view-all-link svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* ===== گرید محصولات ===== */
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .product-card {
+        background: var(--bg-primary);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border-color);
+        cursor: pointer;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .product-image-wrapper {
+        position: relative;
+        overflow: hidden;
+        padding-top: 100%;
+    }
+
+    .product-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.1);
+    }
+
+    .product-badges {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 10;
+    }
+
+    .discount-badge {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    .product-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .product-card:hover .product-overlay {
+        opacity: 1;
+    }
+
+    .quick-view {
+        background: white;
+        color: var(--accent-primary);
+        padding: 0.8rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .quick-view {
+        transform: translateY(0);
+    }
+
+    .product-info {
+        padding: 1.5rem;
+    }
+
+    .product-category {
+        display: inline-block;
+        background: rgba(102, 126, 234, 0.1);
+        color: var(--accent-primary);
+        padding: 0.3rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+    }
+
+    .product-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .product-name a {
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .product-name a:hover {
+        color: var(--accent-primary);
+    }
+
+    .product-pricing {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .old-price {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        text-decoration: line-through;
+    }
+
+    .new-price {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #10b981;
+    }
+
+    .btn-add-cart {
+        width: 100%;
+        padding: 0.9rem;
+        background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-hover) 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .btn-add-cart:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-add-cart svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* ===== گرید مقالات ===== */
+    .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .post-card {
+        background: var(--bg-primary);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .post-image-wrapper {
+        position: relative;
+        overflow: hidden;
+        padding-top: 60%;
+    }
+
+    .post-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .post-card:hover .post-image {
+        transform: scale(1.1);
+    }
+
+    .post-category-badge {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .post-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .post-title a {
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .post-title a:hover {
+        color: var(--accent-primary);
+    }
+
+    .post-excerpt {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        flex: 1;
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .post-author {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .post-author svg {
+        width: 18px;
+        height: 18px;
+        color: var(--accent-primary);
+    }
+
+    .read-more {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        color: var(--accent-primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .read-more:hover {
+        gap: 0.6rem;
+    }
+
+    .read-more svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* ===== پیام بدون داده ===== */
+    .no-data-message {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 4rem 2rem;
+        background: var(--bg-primary);
+        border-radius: 20px;
+        border: 2px dashed var(--border-color);
+    }
+
+    .no-data-message svg {
+        width: 80px;
+        height: 80px;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        opacity: 0.5;
+    }
+
+    .no-data-message h3 {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .no-data-message p {
+        color: var(--text-secondary);
+        font-size: 1rem;
+    }
+
+    /* ===== Dark Mode ===== */
+    body.dark-mode .hero-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1200px) {
+        .main-wrapper {
+            grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+            order: 2;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .hero-wrapper {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-image {
+            order: -1;
+            text-align: center;
+        }
+
+        .floating-card {
+            display: none;
+        }
+
+        .products-grid,
+        .posts-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-section {
+            padding: 6rem 0 3rem;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .hero-stats {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .stat-divider {
+            width: 100%;
+            height: 1px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+        }
+
+        .products-grid,
+        .posts-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .main-wrapper {
+            padding: 0 1rem 3rem;
+        }
+    }
+
+    /* ===== انیمیشن AOS ===== */
+    [data-aos] {
+        opacity: 0;
+        transition-property: transform, opacity;
+        transition-duration: 0.6s;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-aos].aos-animate {
+        opacity: 1;
+    }
+
+    [data-aos="fade-up"] {
+        transform: translateY(30px);
+    }
+
+    [data-aos="fade-up"].aos-animate {
+        transform: translateY(0);
+    }
+
+    [data-aos="fade-left"] {
+        transform: translateX(-30px);
+    }
+
+    [data-aos="fade-left"].aos-animate {
+        transform: translateX(0);
+    }
+
+    [data-aos="fade-right"] {
+        transform: translateX(30px);
+    }
+
+    [data-aos="fade-right"].aos-animate {
+        transform: translateX(0);
+    }
 </style>
+
+<script>
+    // اسکریپت ساده برای انیمیشن AOS
+    document.addEventListener('DOMContentLoaded', () => {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-aos]').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>
