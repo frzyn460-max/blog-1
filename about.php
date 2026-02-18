@@ -254,8 +254,10 @@ require_once("./include/header.php");
 
     /* ===== بخش هیرو ===== */
     .about-hero {
-        padding: 12rem 0 6rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 50px;
+        border-radius: 12px;
+        margin-top: 20px;
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
         position: relative;
         overflow: hidden;
     }
@@ -597,7 +599,7 @@ require_once("./include/header.php");
 
     /* ===== Dark Mode ===== */
     body.dark-mode .about-hero {
-        background: linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%);
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b82f6 100%);
     }
 
     /* ===== انیمیشن AOS ===== */

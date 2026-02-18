@@ -211,7 +211,7 @@ $current_year = date('Y');
     .footer-logo h3 {
         font-size: 1.8rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 0.5rem;
@@ -468,7 +468,7 @@ $current_year = date('Y');
         left: 30px;
         width: 55px;
         height: 55px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
         border: none;
         border-radius: 50%;
         color: white;

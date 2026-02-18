@@ -1,40 +1,50 @@
 <?php
-session_start();
-header('Content-Type: application/json');
+/**
+ * افزودن محصول به سبد خرید
+ * با خروجی JSON
+ */
 
-// چک کردن وجود product_id در درخواست
-if (isset($_GET['product_id'])) {
-    $product_id = intval($_GET['product_id']);
-
-    // بررسی مقدار product_id معتبر است یا خیر
-    if ($product_id <= 0) {
-        http_response_code(400);
-        echo json_encode(['status' => 'error', 'message' => 'شناسه محصول نامعتبر است']);
-        exit();
-    }
-
-    // اگر سبد خرید وجود ندارد، آن را ایجاد می‌کنیم
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    // اگر محصول قبلا در سبد بوده، تعداد آن را افزایش می‌دهیم، وگرنه مقدار 1 قرار می‌دهیم
-    if (isset($_SESSION['cart'][$product_id])) {
-        $_SESSION['cart'][$product_id]++;
-    } else {
-        $_SESSION['cart'][$product_id] = 1;
-    }
-
-    // پاسخ موفقیت آمیز
-    http_response_code(200);
-    echo json_encode([
-        'status' => 'success',
-        'message' => 'محصول به سبد خرید افزوده شد',
-        'cart' => $_SESSION['cart']
-    ]);
-} else {
-    // اگر product_id ارسال نشده باشد
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'شناسه محصول ارسال نشده است']);
+// شروع session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
-?>
+
+// تنظیم header برای JSON
+header('Content-Type: application/json; charset=utf-8');
+
+// دریافت شناسه محصول
+$product_id = isset($_GET['product_id']) ? filter_var($_GET['product_id'], FILTER_VALIDATE_INT) : 0;
+
+// بررسی معتبر بودن
+if (!$product_id || $product_id <= 0) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'شناسه محصول نامعتبر است'
+    ]);
+    exit();
+}
+
+// ایجاد سبد خرید اگر وجود نداشته باشد
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// افزودن یا افزایش تعداد
+if (isset($_SESSION['cart'][$product_id])) {
+    $_SESSION['cart'][$product_id]++;
+} else {
+    $_SESSION['cart'][$product_id] = 1;
+}
+
+// محاسبه تعداد کل
+$total_items = array_sum($_SESSION['cart']);
+
+// پاسخ موفق
+echo json_encode([
+    'success' => true,
+    'message' => 'محصول با موفقیت به سبد خرید اضافه شد',
+    'product_id' => $product_id,
+    'quantity' => $_SESSION['cart'][$product_id],
+    'total_items' => $total_items
+]);
+exit();
