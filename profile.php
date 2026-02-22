@@ -149,7 +149,7 @@ body{
     background:var(--g100);color:var(--g800);
 }
 body.dark{
-    --g100:#0f172a;--g50:#1e293b;--w:#1e293b;
+    --g100:#0f172a;--g50:#1e293b;--w:#f7fafc;
     --g200:#334155;--g400:#64748b;--g600:#cbd5e1;--g800:#f1f5f9;
     background:#0f172a;color:#f1f5f9;
 }
