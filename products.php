@@ -436,27 +436,7 @@ if ($category_id) $cat_info = fetchOne($db,"SELECT title FROM categories WHERE i
 }
 </style>
 
-<!-- PAGE HERO -->
-<section class="ph">
-  <div class="ph-in" data-aos="fade-up">
-    <div class="ph-ey"><span></span> فروشگاه کتاب‌نت <span></span></div>
-    <h1 class="ph-t">
-      <?php if($search!==''): ?>
-        نتایج جستجو برای <em>«<?=escape($search)?>»</em>
-      <?php elseif($category_id&&$cat_info): ?>
-        کتاب‌های <em><?=escape($cat_info['title'])?></em>
-      <?php else: ?>
-        همه <em>محصولات</em>
-      <?php endif; ?>
-    </h1>
-    <p class="ph-sub">بهترین کتاب‌ها با قیمت مناسب، ارسال سریع و ضمانت اصالت کالا</p>
-    <div class="ph-stats">
-      <div class="ph-st"><strong><?=$total_count?></strong><span>محصول موجود</span></div>
-      <div class="ph-st"><strong><?=$discounted_count?></strong><span>دارای تخفیف</span></div>
-      <div class="ph-st"><strong>24/7</strong><span>پشتیبانی</span></div>
-    </div>
-  </div>
-</section>
+
 
 <!-- STICKY SEARCH -->
 <div class="prd-sb">

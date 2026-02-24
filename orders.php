@@ -99,7 +99,7 @@ body.dark{
 .top{
     background:linear-gradient(135deg,var(--dp),var(--mid));
     padding:1.25rem 0;box-shadow:0 4px 20px rgba(0,0,0,.2);
-    position:sticky;top:0;z-index:100;
+    position:sticky;top:0;z-index:100;border-radius: 0 0 16px 16px;
 }
 body.dark .top{background:linear-gradient(135deg,#020617,#0c1e47)}
 .top::before{

@@ -35,7 +35,9 @@ define("SESSION_LIFETIME", 7200); // مدت زمان session به ثانیه (2 
 
 // تنظیمات سایت
 define("SITE_NAME", "کتاب نت");
-define("SITE_URL", "http://localhost/weblog");
+// در include/config.php این خط رو پیدا کن و درست کن:
+define("SITE_URL", "http://localhost/php/blog-1");
+//                  ↑ مسیر دقیق سایت شما از URL بار
 define("ITEMS_PER_PAGE", 6); // تعداد آیتم در هر صفحه
 
 // مسیرهای آپلود

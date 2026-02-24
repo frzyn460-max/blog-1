@@ -409,27 +409,6 @@ function truncateText($t, $l = 130) {
 }
 </style>
 
-<!-- PAGE HERO -->
-<section class="ph">
-    <div class="ph-in" data-aos="fade-up">
-        <div class="ph-ey"><span></span> وبلاگ و مقالات <span></span></div>
-        <h1 class="ph-t">
-            <?php if ($search !== ''): ?>
-                نتایج جستجو برای <em>«<?= escape($search) ?>»</em>
-            <?php elseif ($category_id && $cat_info): ?>
-                مقالات <em><?= escape($cat_info['title']) ?></em>
-            <?php else: ?>
-                همه <em>مقالات</em>
-            <?php endif; ?>
-        </h1>
-        <p class="ph-sub">جدیدترین مطالب آموزشی، معرفی کتاب و نقد ادبی</p>
-        <div class="ph-stats">
-            <div class="ph-st"><strong><?= $total ?></strong><span>مقاله موجود</span></div>
-            <div class="ph-st"><strong><?= count($all_cats) ?></strong><span>دسته‌بندی</span></div>
-            <div class="ph-st"><strong>رایگان</strong><span>دسترسی</span></div>
-        </div>
-    </div>
-</section>
 
 <!-- STICKY SEARCH -->
 <div class="pst-sb">

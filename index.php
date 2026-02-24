@@ -381,6 +381,7 @@ function calcDisc($o, $n)  { return $o > 0 ? round((($o - $n) / $o) * 100) : 0; 
     background: var(--bg-secondary);
     border-right: 1px solid var(--border-color);
     min-height: 360px;
+    border-radius:0 15px 15px 0;
 }
 .idx-flash-img {
     width: 220px;

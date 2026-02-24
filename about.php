@@ -398,28 +398,6 @@ require_once("./include/header.php");
 }
 </style>
 
-<!-- ── PAGE HERO ── -->
-<section class="ab-hero">
-    <div class="ab-hero-blob"></div>
-    <div class="ab-hero-in" data-aos="fade-up">
-        <div class="ab-ey"><span></span> درباره ما <span></span></div>
-        <div class="ab-hero-badge">📖 از سال ۱۳۹۵ در خدمت شما</div>
-        <h1 class="ab-hero-title">
-            ما <em>کتاب‌نت</em> هستیم
-        </h1>
-        <p class="ab-hero-sub">
-            بزرگترین فروشگاه آنلاین کتاب در ایران — پل ارتباطی شما با دنیای دانش و ادبیات
-        </p>
-        <div class="ab-hero-stats">
-            <div class="ab-hs"><strong>10,000+</strong><span>عنوان کتاب</span></div>
-            <div class="ab-hs"><strong>50,000+</strong><span>کاربر فعال</span></div>
-            <div class="ab-hs"><strong>100K+</strong><span>سفارش تحویلی</span></div>
-            <div class="ab-hs"><strong>4.8 ⭐</strong><span>رضایت مشتری</span></div>
-        </div>
-    </div>
-    <div class="ab-scroll"><span>اسکرول</span><div class="ab-scroll-line"></div></div>
-</section>
-
 <div class="pw">
 
     <!-- ── STORY ── -->
