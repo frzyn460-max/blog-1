@@ -1,7 +1,7 @@
 <?php
 /**
  * صفحه درباره ما — کتاب‌نت
- * تم: Midnight Blue | بدون سایدبار | وسط‌چین
+ * طراحی: Midnight Blue | تمیز و مدرن‌تر
  */
 require_once("./include/header.php");
 ?>
@@ -9,425 +9,352 @@ require_once("./include/header.php");
 <link rel="stylesheet" href="./css/style.css">
 
 <style>
-/* ═══════════════════════════════════════════════
-   about.php — Midnight Blue — Full Width
-   ═══════════════════════════════════════════════ */
-.pw { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+/* ════════════════════════════════════════════
+   about.php — بازطراحی شده — Midnight Blue
+   ════════════════════════════════════════════ */
+.pw { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+/* جلوگیری از overflow افقی */
+body { overflow-x: hidden; }
+.ab-story-img { overflow: visible; }
 
-/* ── PAGE HERO ── */
-.ab-hero {
-    position: relative;
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e40af 100%);
-    padding: 10rem 1.5rem 6rem;
-    overflow: hidden;
-    text-align: center;
-}
-.ab-hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,.055) 1px, transparent 1px);
-    background-size: 30px 30px; pointer-events: none;
-}
-.ab-hero::after {
-    content: '';
-    position: absolute;
-    width: 800px; height: 800px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(96,165,250,.14) 0%, transparent 65%);
-    top: -250px; right: -200px; pointer-events: none;
-}
-/* دایره گوشه چپ */
-.ab-hero-blob {
-    position: absolute;
-    width: 500px; height: 500px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(167,139,250,.12) 0%, transparent 65%);
-    bottom: -150px; left: -100px; pointer-events: none;
-}
-.ab-hero-in { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
-.ab-ey {
-    display: inline-flex; align-items: center; gap: .6rem;
-    font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
-    color: #93c5fd; font-weight: 700; margin-bottom: 1.4rem;
-}
-.ab-ey span { width: 24px; height: 1px; background: #93c5fd; display: inline-block; }
-.ab-hero-title {
-    font-size: clamp(2.4rem, 5vw, 4.2rem);
-    font-weight: 900; color: #fff;
-    letter-spacing: -.025em; line-height: 1.1; margin-bottom: 1.2rem;
-}
-.ab-hero-title em {
-    font-style: normal;
-    background: linear-gradient(135deg, #60a5fa, #a78bfa);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.ab-hero-sub {
-    font-size: 1.12rem; color: rgba(255,255,255,.62);
-    line-height: 1.85; margin-bottom: 3rem; max-width: 580px; margin-left: auto; margin-right: auto;
-}
-/* badge */
-.ab-hero-badge {
-    display: inline-flex; align-items: center; gap: .6rem;
-    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
-    backdrop-filter: blur(8px); color: #fff;
-    padding: .6rem 1.4rem; border-radius: 50px; font-size: .88rem; font-weight: 600;
-    margin-bottom: 2rem;
-}
-
-/* آمار hero */
-.ab-hero-stats {
-    display: inline-flex; gap: 3rem; flex-wrap: wrap; justify-content: center;
-    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
-    border-radius: 20px; padding: 1.2rem 3rem; backdrop-filter: blur(8px);
-}
-.ab-hs strong { display: block; font-size: 1.9rem; font-weight: 900; color: #60a5fa; line-height: 1; }
-.ab-hs span   { font-size: .72rem; color: rgba(255,255,255,.45); letter-spacing: .08em; text-transform: uppercase; margin-top: .25rem; display: block; }
-
-/* scroll cue */
-.ab-scroll {
-    position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
-    z-index: 10; display: flex; flex-direction: column; align-items: center; gap: .5rem;
-    color: rgba(255,255,255,.3); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
-}
-.ab-scroll-line {
-    width: 1px; height: 40px;
-    background: linear-gradient(to bottom, rgba(255,255,255,.3), transparent);
-    animation: sPulse 2s ease-in-out infinite;
-}
-@keyframes sPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
-
-/* ── SECTION LABEL ── */
+/* ── SECTION SHARED ── */
+.ab-sec { padding: 5.5rem 0; }
 .ab-lbl {
     display: inline-flex; align-items: center; gap: .55rem;
-    font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--accent-primary, #2563eb); font-weight: 700; margin-bottom: .9rem;
+    font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--accent-secondary, #3b82f6); font-weight: 700; margin-bottom: .9rem;
 }
-.ab-lbl::before, .ab-lbl::after { content: ''; width: 20px; height: 1px; background: var(--accent-primary,#2563eb); }
-
-/* section header */
-.ab-sh {
-    display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem;
-}
-.ab-sh-icon { width: 32px; height: 32px; color: var(--accent-primary); flex-shrink: 0; }
-.ab-sh-title { font-size: 1.9rem; font-weight: 900; color: var(--text-primary); }
-
-/* ── SECTIONS ── */
-.ab-sec { padding: 5.5rem 0; }
-.ab-sec-center { text-align: center; }
+.ab-lbl::before, .ab-lbl::after { content: ''; width: 18px; height: 1px; background: currentColor; }
+.ab-sec-title { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 900; color: var(--text-primary); letter-spacing: -.02em; line-height: 1.2; margin-bottom: .6rem; }
+.ab-sec-sub   { color: var(--text-secondary); font-size: .95rem; }
 
 /* ── STORY ── */
 .ab-story-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
+    grid-template-columns: 5fr 6fr;
+    gap: 6rem; align-items: center;
 }
 .ab-story-img { position: relative; }
 .ab-story-frame {
-    position: relative; border-radius: 24px; overflow: hidden;
-    box-shadow: var(--shadow-lg);
+    position: relative; border-radius: 28px; overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,.22);
+    border: 1px solid var(--border-color);
     z-index: 2;
 }
-.ab-story-frame img { width: 100%; display: block; border-radius: 24px; }
-.ab-story-deco {
-    position: absolute;
-    top: -16px; right: -16px;
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, var(--accent-primary,#2563eb), var(--accent-hover,#1d4ed8));
-    border-radius: 24px; z-index: 1; opacity: .65;
+.ab-story-frame img { width: 100%; display: block; }
+
+/* دکوی گوشه‌ای */
+.ab-story-deco-br {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 60%; height: 60%; z-index: 1;
+    background: linear-gradient(135deg, rgba(30,58,138,.5), rgba(99,102,241,.3));
+    border-radius: 20px;
+    filter: blur(1px);
 }
-.ab-story-text p {
-    font-size: 1.05rem; line-height: 1.95;
-    color: var(--text-secondary);
-    margin-bottom: 1.4rem; text-align: justify;
+.ab-story-deco-tl {
+    position: absolute; top: -14px; left: -14px;
+    width: 90px; height: 90px; z-index: 3;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.4rem; box-shadow: 0 8px 24px rgba(30,58,138,.45);
 }
-.ab-story-text strong { color: var(--accent-primary); font-weight: 700; }
+
+/* بج نوار */
+.ab-story-badge {
+    position: absolute; bottom: 24px; left: -20px; z-index: 5;
+    background: var(--bg-primary); border: 1px solid var(--border-color);
+    border-radius: 16px; padding: 1rem 1.4rem;
+    box-shadow: 0 12px 32px rgba(0,0,0,.15);
+    display: flex; align-items: center; gap: .8rem;
+    white-space: nowrap; min-width: 180px;
+}
+.ab-story-badge-icon { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg,#1e3a8a,#3b82f6); display: flex; align-items: center; justify-content: center; color:#fff; flex-shrink:0; }
+.ab-story-badge-icon svg { width:20px; height:20px; }
+.ab-story-badge strong { display:block; font-size:1rem; font-weight:800; color:var(--text-primary); }
+.ab-story-badge span { font-size:.75rem; color:var(--text-secondary); }
+
+.ab-story-text { }
+.ab-story-text p { font-size: 1rem; line-height: 2; color: var(--text-secondary); margin-bottom: 1.2rem; }
+.ab-story-text strong { color: var(--accent-secondary,#3b82f6); font-weight: 700; }
 .ab-story-cta {
-    display: inline-flex; align-items: center; gap: .5rem;
-    margin-top: .5rem;
-    padding: .9rem 2rem; border-radius: 13px;
-    background: linear-gradient(135deg, var(--accent-primary,#2563eb), var(--accent-hover,#1d4ed8));
-    color: #fff; font-weight: 700; font-size: .92rem;
-    text-decoration: none; transition: all .3s;
-    box-shadow: 0 6px 20px rgba(37,99,235,.3);
+    display: inline-flex; align-items: center; gap: .55rem;
+    margin-top: .8rem; padding: .95rem 2rem; border-radius: 14px;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: #fff; font-weight: 700; font-size: .9rem;
+    text-decoration: none; transition: all .35s; box-shadow: 0 8px 24px rgba(30,58,138,.35);
 }
-.ab-story-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(37,99,235,.4); }
-.ab-story-cta svg { width: 18px; height: 18px; }
+.ab-story-cta:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(30,58,138,.5); }
+.ab-story-cta svg { width: 17px; height: 17px; }
 
 /* ── VALUES ── */
 .ab-vals-wrap {
     background: var(--bg-secondary);
-    border-radius: 2px;
-    padding: 5.5rem 1.5rem;
-    margin: 0 -1.5rem;
+    padding: 6rem 1.5rem; margin: 0 -1.5rem;
 }
+.ab-vals-inner { max-width: 1280px; margin: 0 auto; }
 .ab-vals-head { text-align: center; margin-bottom: 3.5rem; }
-.ab-vals-title { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; color: var(--text-primary); }
-.ab-vals-sub   { color: var(--text-secondary); margin-top: .6rem; font-size: .95rem; }
 .ab-vals-grid {
-    max-width: 1400px; margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
 }
 .ab-vcard {
     background: var(--bg-primary);
-    padding: 2.4rem 2rem;
-    border-radius: 22px;
-    text-align: center;
+    padding: 2.2rem 1.8rem; border-radius: 22px;
     border: 1px solid var(--border-color);
     transition: all .4s cubic-bezier(.4,0,.2,1);
     position: relative; overflow: hidden;
 }
+.ab-vcard-glow {
+    position: absolute; top: 0; right: 0;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,130,246,.08) 0%, transparent 70%);
+    transform: translate(30px,-30px);
+    transition: all .4s;
+}
+.ab-vcard:hover .ab-vcard-glow { transform: translate(10px,-10px); opacity: 1.5; }
 .ab-vcard::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--accent-primary,#2563eb), #60a5fa);
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
     transform: scaleX(0); transition: transform .35s ease; transform-origin: right;
 }
-.ab-vcard:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
+.ab-vcard:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,.1); }
 .ab-vcard:hover::after { transform: scaleX(1); transform-origin: left; }
 .ab-vcard-icon {
-    width: 76px; height: 76px; margin: 0 auto 1.4rem;
-    background: linear-gradient(135deg, var(--accent-primary,#2563eb), var(--accent-hover,#1d4ed8));
-    border-radius: 50%;
+    width: 58px; height: 58px; margin-bottom: 1.3rem;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
-    color: #fff;
-    box-shadow: 0 8px 24px rgba(37,99,235,.3);
+    color: #fff; box-shadow: 0 6px 18px rgba(30,58,138,.3);
 }
-.ab-vcard-icon svg { width: 36px; height: 36px; }
-.ab-vcard h3 { font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin-bottom: .65rem; }
-.ab-vcard p  { color: var(--text-secondary); line-height: 1.72; font-size: .9rem; }
+.ab-vcard-icon svg { width: 28px; height: 28px; }
+.ab-vcard h3 { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: .55rem; }
+.ab-vcard p  { color: var(--text-secondary); line-height: 1.75; font-size: .88rem; }
 
-/* ── STATS COUNTER ── */
+/* ── STATS ── */
 .ab-stats {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e40af 100%);
-    border-radius: 28px; padding: 5rem 3rem;
+    background: linear-gradient(155deg, #0f172a 0%, #1e3a8a 55%, #312e81 100%);
+    border-radius: 28px; padding: 5rem 2.5rem;
     position: relative; overflow: hidden; margin: 5.5rem 0;
 }
-.ab-stats::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
-    background-size: 28px 28px; pointer-events: none;
-}
-.ab-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem; position: relative; z-index: 2;
-}
+.ab-stats::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; }
+.ab-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; z-index: 2; }
 .ab-stat {
-    text-align: center; color: #fff;
-    padding: 1.5rem; border-radius: 18px;
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.1);
-    transition: all .3s;
+    text-align: center; color: #fff; padding: 2rem 1rem;
+    border-radius: 20px; background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08); transition: all .35s;
 }
-.ab-stat:hover { background: rgba(255,255,255,.1); transform: translateY(-4px); }
-.ab-stat-icon { font-size: 2.6rem; margin-bottom: .9rem; display: block; }
-.ab-stat-num  { font-size: 2.5rem; font-weight: 900; color: #60a5fa; line-height: 1; margin-bottom: .4rem; display: block; }
-.ab-stat-lbl  { font-size: .85rem; color: rgba(255,255,255,.55); letter-spacing: .06em; }
+.ab-stat:hover { background: rgba(255,255,255,.1); transform: translateY(-5px); }
+.ab-stat-icon { font-size: 2.4rem; margin-bottom: .8rem; display: block; }
+.ab-stat-num { font-size: 2.6rem; font-weight: 900; line-height: 1; margin-bottom: .45rem; display: block; background: linear-gradient(135deg,#60a5fa,#a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.ab-stat-lbl { font-size: .8rem; color: rgba(255,255,255,.5); letter-spacing: .07em; }
 
 /* ── TEAM ── */
-.ab-team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-}
+.ab-team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .ab-tcard {
-    background: var(--bg-primary);
-    padding: 2.5rem 2rem;
-    border-radius: 22px;
-    text-align: center;
+    background: var(--bg-primary); padding: 2.2rem 1.6rem;
+    border-radius: 22px; text-align: center;
     border: 1px solid var(--border-color);
     transition: all .4s cubic-bezier(.4,0,.2,1);
     position: relative; overflow: hidden;
 }
-.ab-tcard::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, var(--accent-primary,#2563eb), #60a5fa);
-    opacity: 0; transition: opacity .35s;
-}
-.ab-tcard:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
+.ab-tcard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); opacity: 0; transition: opacity .35s; }
+.ab-tcard:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,.1); }
 .ab-tcard:hover::before { opacity: 1; }
-.ab-tav {
-    width: 110px; height: 110px; margin: 0 auto 1.4rem;
-    background: linear-gradient(135deg, var(--accent-primary,#2563eb), var(--accent-hover,#1d4ed8));
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 3.4rem;
-    box-shadow: 0 10px 28px rgba(37,99,235,.3);
-    border: 4px solid var(--bg-secondary);
-}
-.ab-tcard h3 { font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: .35rem; }
-.ab-trole {
-    display: inline-block;
-    background: rgba(37,99,235,.1); color: var(--accent-primary);
-    padding: .28rem .85rem; border-radius: 50px;
-    font-weight: 700; font-size: .8rem; margin-bottom: .9rem; letter-spacing: .05em;
-}
-.ab-tdesc { color: var(--text-secondary); font-size: .88rem; line-height: 1.7; }
+.ab-tav { width: 88px; height: 88px; margin: 0 auto 1.2rem; background: linear-gradient(135deg, #1e3a8a, #3b82f6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; box-shadow: 0 8px 24px rgba(30,58,138,.3); border: 3px solid var(--bg-secondary); }
+.ab-tcard h3 { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: .3rem; }
+.ab-trole { display: inline-block; background: rgba(59,130,246,.1); color: var(--accent-secondary,#3b82f6); padding: .25rem .8rem; border-radius: 50px; font-weight: 700; font-size: .75rem; margin-bottom: .8rem; letter-spacing: .05em; border: 1px solid rgba(59,130,246,.2); }
+.ab-tdesc { color: var(--text-secondary); font-size: .85rem; line-height: 1.7; }
+.ab-tcard-socials { display: flex; justify-content: center; gap: .5rem; margin-top: 1.1rem; }
+.ab-tsocial { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border-color); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); text-decoration: none; transition: all .3s; font-size: .82rem; font-weight: 700; }
+.ab-tsocial:hover { background: linear-gradient(135deg,#1e3a8a,#3b82f6); border-color: transparent; color: #fff; transform: translateY(-2px); }
 
-/* social icons on team card */
-.ab-tcard-socials { display: flex; justify-content: center; gap: .6rem; margin-top: 1.2rem; }
-.ab-tsocial {
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 1.5px solid var(--border-color);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-secondary); text-decoration: none;
-    transition: all .3s; font-size: .9rem;
+/* ══════════════════════════════════════════
+   MAP SECTION — نقشه موقعیت مکانی
+   ══════════════════════════════════════════ */
+.ab-map-section {
+    margin-bottom: 1.5rem;
 }
-.ab-tsocial:hover { background: var(--accent-primary); border-color: var(--accent-primary); color: #fff; transform: translateY(-2px); }
+.ab-map-wrap {
+    position: relative;
+    border-radius: 28px; overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 16px 48px rgba(0,0,0,.1);
+    background: var(--bg-secondary);
+}
+/* header نقشه */
+.ab-map-header {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    padding: 1.4rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+}
+.ab-map-header-left { display: flex; align-items: center; gap: .9rem; }
+.ab-map-pin-icon {
+    width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+    background: rgba(96,165,250,.2); border: 1px solid rgba(96,165,250,.3);
+    display: flex; align-items: center; justify-content: center; color: #60a5fa;
+}
+.ab-map-pin-icon svg { width: 22px; height: 22px; }
+.ab-map-title  { font-size: 1.05rem; font-weight: 800; color: #fff; }
+.ab-map-addr   { font-size: .8rem; color: rgba(255,255,255,.5); margin-top: .15rem; }
+.ab-map-open-btn {
+    display: inline-flex; align-items: center; gap: .45rem;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    color: #fff; padding: .5rem 1.1rem; border-radius: 10px;
+    font-size: .8rem; font-weight: 700; text-decoration: none;
+    transition: all .3s; white-space: nowrap;
+}
+.ab-map-open-btn:hover { background: rgba(255,255,255,.2); }
+.ab-map-open-btn svg { width: 14px; height: 14px; }
+
+/* iframe نقشه */
+.ab-map-iframe-wrap {
+    position: relative;
+    height: 380px;
+}
+.ab-map-iframe-wrap iframe {
+    width: 100%; height: 100%; border: none; display: block;
+    filter: var(--map-filter, none);
+}
+/* دارک مود روی نقشه */
+body.dark-mode .ab-map-iframe-wrap iframe {
+    filter: invert(90%) hue-rotate(180deg) brightness(.85) saturate(.8);
+}
+
+/* info bar پایین نقشه */
+.ab-map-info {
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+    padding: 1.1rem 2rem;
+    display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap;
+}
+.ab-map-info-item { display: flex; align-items: center; gap: .55rem; font-size: .82rem; color: var(--text-secondary); }
+.ab-map-info-item svg { width: 16px; height: 16px; color: #3b82f6; flex-shrink: 0; }
+.ab-map-info-item strong { color: var(--text-primary); font-weight: 600; }
 
 /* ── CONTACT ── */
 .ab-contact {
-    background: var(--bg-primary);
-    border-radius: 28px; padding: 4rem 3rem;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
+    background: var(--bg-primary); border-radius: 28px;
+    padding: 3.5rem 3rem; border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(0,0,0,.06);
     margin-bottom: 5.5rem;
-    position: relative; overflow: hidden;
 }
-.ab-contact::before {
-    content: '📞';
-    font-size: 10rem; opacity: .04;
-    position: absolute; top: -1rem; right: 1rem;
-    pointer-events: none; line-height: 1;
-}
-.ab-contact-head { margin-bottom: 2.8rem; }
-.ab-contact-head h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 900; color: var(--text-primary); margin-bottom: .6rem; }
-.ab-contact-head p  { color: var(--text-secondary); font-size: 1rem; }
-.ab-contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-}
+.ab-contact-head { margin-bottom: 2.5rem; }
+.ab-contact-head h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 900; color: var(--text-primary); margin-bottom: .5rem; }
+.ab-contact-head p  { color: var(--text-secondary); font-size: .96rem; }
+.ab-contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
 .ab-citem {
-    display: flex; align-items: center; gap: 1.1rem;
-    padding: 1.6rem; border-radius: 18px;
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.5rem; border-radius: 18px;
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     transition: all .35s;
 }
-.ab-citem:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--accent-primary); }
-.ab-citem-icon {
-    width: 52px; height: 52px; border-radius: 14px;
-    background: linear-gradient(135deg, var(--accent-primary,#2563eb), var(--accent-hover,#1d4ed8));
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; flex-shrink: 0;
-    box-shadow: 0 6px 18px rgba(37,99,235,.25);
-}
-.ab-citem-icon svg { width: 24px; height: 24px; }
-.ab-citem strong { display: block; color: var(--text-primary); font-weight: 700; font-size: .95rem; margin-bottom: .2rem; }
-.ab-citem span   { color: var(--text-secondary); font-size: .88rem; }
+.ab-citem:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,.08); border-color: rgba(59,130,246,.35); }
+.ab-citem-icon { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; box-shadow: 0 6px 16px rgba(30,58,138,.25); }
+.ab-citem-icon svg { width: 22px; height: 22px; }
+.ab-citem strong { display: block; color: var(--text-primary); font-weight: 700; font-size: .92rem; margin-bottom: .2rem; }
+.ab-citem span   { color: var(--text-secondary); font-size: .84rem; }
 
-/* CTA BANNER */
+/* ── CTA ── */
 .ab-cta {
-    background: linear-gradient(135deg, var(--accent-primary,#1e3a8a), var(--accent-hover,#1e40af));
-    border-radius: 28px; padding: 4.5rem 2rem;
-    text-align: center; margin-bottom: 5.5rem;
-    position: relative; overflow: hidden;
+    background: linear-gradient(155deg, #0f172a 0%, #1e3a8a 55%, #312e81 100%);
+    border-radius: 28px; padding: 4.5rem 2rem; text-align: center;
+    margin-bottom: 5.5rem; position: relative; overflow: hidden;
 }
-.ab-cta::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
-    background-size: 26px 26px; pointer-events: none;
-}
+.ab-cta::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 26px 26px; pointer-events: none; }
 .ab-cta-in { position: relative; z-index: 2; }
-.ab-cta h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; color: #fff; margin-bottom: .75rem; }
-.ab-cta p  { color: rgba(255,255,255,.65); margin-bottom: 2.2rem; font-size: 1rem; }
+.ab-cta h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 900; color: #fff; margin-bottom: .65rem; }
+.ab-cta p  { color: rgba(255,255,255,.55); margin-bottom: 2.5rem; font-size: .98rem; }
 .ab-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-.ab-cta-btn-w {
-    padding: 1rem 2.2rem; border-radius: 14px;
-    background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.35);
-    color: #fff; font-weight: 700; font-size: .95rem;
-    text-decoration: none; transition: all .3s; display: inline-flex; align-items: center; gap: .5rem;
-}
-.ab-cta-btn-w:hover { background: rgba(255,255,255,.25); transform: translateY(-3px); }
-.ab-cta-btn-s {
-    padding: 1rem 2.2rem; border-radius: 14px;
-    background: #fff; color: var(--accent-primary,#2563eb);
-    font-weight: 800; font-size: .95rem;
-    text-decoration: none; transition: all .3s; display: inline-flex; align-items: center; gap: .5rem;
-    box-shadow: 0 6px 20px rgba(0,0,0,.2);
-}
-.ab-cta-btn-s:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
-.ab-cta-btn-w svg, .ab-cta-btn-s svg { width: 18px; height: 18px; }
+.ab-cta-btn-s { padding: 1rem 2.2rem; border-radius: 14px; background: #fff; color: #1e3a8a; font-weight: 800; font-size: .92rem; text-decoration: none; transition: all .3s; display: inline-flex; align-items: center; gap: .5rem; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+.ab-cta-btn-s:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,0,0,.3); }
+.ab-cta-btn-w { padding: 1rem 2.2rem; border-radius: 14px; background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.28); color: #fff; font-weight: 700; font-size: .92rem; text-decoration: none; transition: all .3s; display: inline-flex; align-items: center; gap: .5rem; }
+.ab-cta-btn-w:hover { background: rgba(255,255,255,.22); transform: translateY(-3px); }
+.ab-cta-btn-s svg, .ab-cta-btn-w svg { width: 17px; height: 17px; }
 
 /* AOS */
 [data-aos] { opacity: 0; transition-property: transform,opacity; transition-duration: .65s; transition-timing-function: cubic-bezier(.4,0,.2,1); }
 [data-aos].aos-animate { opacity: 1; }
-[data-aos="fade-up"]    { transform: translateY(30px); }    [data-aos="fade-up"].aos-animate    { transform: translateY(0); }
-[data-aos="fade-right"] { transform: translateX(-30px); }   [data-aos="fade-right"].aos-animate { transform: translateX(0); }
-[data-aos="fade-left"]  { transform: translateX(30px); }    [data-aos="fade-left"].aos-animate  { transform: translateX(0); }
-[data-aos="zoom-in"]    { transform: scale(.93); }           [data-aos="zoom-in"].aos-animate    { transform: scale(1); }
-[data-aos="flip-up"]    { transform: perspective(1200px) rotateX(-90deg); } [data-aos="flip-up"].aos-animate { transform: perspective(1200px) rotateX(0); }
+[data-aos="fade-up"]    { transform: translateY(28px); }   [data-aos="fade-up"].aos-animate    { transform: translateY(0); }
+[data-aos="fade-right"] { transform: translateX(-28px); }  [data-aos="fade-right"].aos-animate { transform: translateX(0); }
+[data-aos="fade-left"]  { transform: translateX(28px); }   [data-aos="fade-left"].aos-animate  { transform: translateX(0); }
+[data-aos="zoom-in"]    { transform: scale(.94); }          [data-aos="zoom-in"].aos-animate    { transform: scale(1); }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
+    .ab-vals-grid { grid-template-columns: repeat(2, 1fr); }
+    .ab-team-grid { grid-template-columns: repeat(2, 1fr); }
     .ab-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .ab-story-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .ab-story-img { order: -1; }
+    .ab-story-badge { left: auto; right: 1rem; }
 }
 @media (max-width: 768px) {
-    .ab-hero { padding: 8rem 1.25rem 4.5rem; }
+    .ab-hero { padding: 8rem 1.25rem 5rem; }
     .pw { padding: 0 1.25rem; }
-    .ab-story-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .ab-story-img { order: -1; }
     .ab-vals-wrap { padding: 4rem 1.25rem; margin: 0 -1.25rem; }
-    .ab-stats { padding: 3.5rem 1.5rem; margin: 4rem 0; }
-    .ab-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .ab-vals-grid { grid-template-columns: 1fr; }
+    .ab-team-grid { grid-template-columns: repeat(2, 1fr); }
     .ab-contact { padding: 2.5rem 1.5rem; }
-    .ab-sec { padding: 4rem 0; }
-    .ab-cta { padding: 3.5rem 1.5rem; }
-    .ab-hero-stats { gap: 2rem; padding: 1rem 2rem; }
+    .ab-contact-grid { grid-template-columns: 1fr; }
+    .ab-stats { padding: 3.5rem 1.5rem; margin: 4rem 0; }
+    .ab-sec { padding: 3.5rem 0; }
+    .ab-map-header { padding: 1.2rem 1.5rem; }
+    .ab-map-info { padding: 1rem 1.5rem; gap: 1.5rem; }
+    .ab-map-iframe-wrap { height: 280px; }
 }
 @media (max-width: 576px) {
-    .ab-hero-title { font-size: 2.2rem; }
-    .ab-hero-stats { gap: 1.5rem; padding: .85rem 1.4rem; }
-    .ab-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .ab-stat-num { font-size: 1.9rem; }
-    .ab-cta-btns { flex-direction: column; align-items: center; }
-    .ab-sh-title { font-size: 1.5rem; }
-    .ab-contact-grid { grid-template-columns: 1fr; }
-    .ab-vals-grid { grid-template-columns: 1fr; }
+    .ab-hero-title { font-size: 2.4rem; }
+    .ab-hero-stats { gap: 1.8rem; padding: 1rem 1.8rem; }
     .ab-team-grid { grid-template-columns: 1fr; }
+    .ab-cta-btns { flex-direction: column; align-items: center; }
+    .ab-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .ab-map-info { flex-direction: column; gap: .8rem; }
 }
 @media (max-width: 420px) {
     .pw { padding: 0 1rem; }
-    .ab-stats-grid { grid-template-columns: 1fr 1fr; }
     .ab-hero { padding: 7.5rem 1rem 4rem; }
 }
 </style>
+
+
 
 <div class="pw">
 
     <!-- ── STORY ── -->
     <section class="ab-sec">
-        <div class="ab-sh" data-aos="fade-up">
-            <svg class="ab-sh-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/></svg>
-            <h2 class="ab-sh-title">داستان ما</h2>
-        </div>
         <div class="ab-story-grid">
             <div class="ab-story-img" data-aos="fade-right">
-                <div class="ab-story-deco"></div>
+                <div class="ab-story-deco-br"></div>
+                <div class="ab-story-deco-tl">📚</div>
                 <div class="ab-story-frame">
                     <img src="./img/25.jpg" alt="کتاب‌نت — داستان ما">
                 </div>
+                <div class="ab-story-badge">
+                    <div class="ab-story-badge-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/></svg>
+                    </div>
+                    <div>
+                        <strong>۴.۹ / ۵</strong>
+                        <span>رضایت مشتریان</span>
+                    </div>
+                </div>
             </div>
             <div class="ab-story-text" data-aos="fade-left">
-                <div class="ab-lbl" style="margin-bottom:1.2rem">داستان کتاب‌نت</div>
+                <div class="ab-lbl">داستان ما</div>
+                <h2 class="ab-sec-title">از یک ایده ساده<br>تا بزرگ‌ترین کتابفروشی آنلاین</h2>
+                <br>
                 <p>
-                    <strong>کتاب‌نت</strong> در سال ۱۳۹۵ با هدف ایجاد دسترسی آسان و سریع به کتاب‌های
-                    مختلف برای تمام علاقه‌مندان به مطالعه راه‌اندازی شد. ما معتقدیم که کتاب پلی است
-                    به دنیای دانش و هر فردی حق دارد به بهترین منابع دسترسی داشته باشد.
+                    <strong>کتاب‌نت</strong> در سال ۱۳۹۵ با هدف ایجاد دسترسی آسان و سریع به کتاب‌های مختلف راه‌اندازی شد. ما معتقدیم کتاب پلی است به دنیای دانش و هر فردی حق دارد به بهترین منابع دسترسی داشته باشد.
                 </p>
                 <p>
-                    امروزه با افتخار میزبان بیش از <strong>50,000 کاربر فعال</strong> هستیم و روزانه
-                    صدها سفارش کتاب را در سراسر کشور پردازش می‌کنیم. تیم ما شبانه‌روز در تلاش است
-                    تا بهترین تجربه خرید را برای شما فراهم کند.
+                    امروز با افتخار میزبان بیش از <strong>۵۰,۰۰۰ کاربر فعال</strong> هستیم. تیم ما شبانه‌روز در تلاش است تا بهترین تجربه خرید کتاب را برای شما فراهم کند.
                 </p>
                 <p>
-                    ماموریت ما ساده است: <strong>ساخت بزرگترین کتابخانه آنلاین فارسی</strong> با بهترین
-                    قیمت‌ها، سریع‌ترین ارسال و بهترین خدمات پس از فروش.
+                    ماموریت ما ساده است: <strong>ساخت بزرگ‌ترین کتابخانه آنلاین فارسی</strong> با بهترین قیمت‌ها، سریع‌ترین ارسال و خدمات استثنایی پس از فروش.
                 </p>
                 <a href="products.php" class="ab-story-cta">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17,18A2,2 0 0,1 19,20A2,2 0 0,1 17,22C15.89,22 15,21.1 15,20C15,18.89 15.89,18 17,18M1,2H4.27L5.21,4H20A1,1 0 0,1 21,5L17.3,11.97C16.96,12.58 16.3,13 15.55,13H8.1L7.2,14.63L7.17,14.75A0.25,0.25 0 0,0 7.42,15H19V17H7C5.89,17 5,16.1 5,15L6.6,11.59L3,4H1V2Z"/></svg>
@@ -437,57 +364,36 @@ require_once("./include/header.php");
         </div>
     </section>
 
-</div><!-- /pw -->
+</div>
 
-<!-- ── VALUES (full-bleed bg) ── -->
+<!-- ── VALUES ── -->
 <div class="ab-vals-wrap">
-    <div class="ab-vals-head" data-aos="fade-up">
-        <div class="ab-lbl" style="justify-content:center">ارزش‌های ما</div>
-        <h2 class="ab-vals-title">چرا کتاب‌نت؟</h2>
-        <p class="ab-vals-sub">اصولی که در هر قدم راهنمای ماست</p>
-    </div>
-    <div class="ab-vals-grid">
-        <div class="ab-vcard" data-aos="zoom-in" style="transition-delay:0ms">
-            <div class="ab-vcard-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"/></svg>
-            </div>
-            <h3>کیفیت برتر</h3>
-            <p>تمام کتاب‌های ما اصل و با بهترین کیفیت چاپ هستند. ضمانت بازگشت ۷ روزه داریم.</p>
+    <div class="ab-vals-inner">
+        <div class="ab-vals-head" data-aos="fade-up">
+            <div class="ab-lbl" style="justify-content:center">چرا ما؟</div>
+            <h2 class="ab-sec-title">ارزش‌هایی که به آن‌ها پایبندیم</h2>
+            <p class="ab-sec-sub">اصولی که در هر قدم راهنمای ماست</p>
         </div>
-        <div class="ab-vcard" data-aos="zoom-in" style="transition-delay:80ms">
-            <div class="ab-vcard-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/></svg>
+        <div class="ab-vals-grid">
+            <?php
+            $values = [
+                ['M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z', 'کیفیت برتر', 'تمام کتاب‌های ما اصل و با بهترین کیفیت چاپ هستند. ضمانت بازگشت ۷ روزه داریم.', 0],
+                ['M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z', 'ارسال سریع', 'تحویل سفارش‌ها در کمتر از ۴۸ ساعت در سراسر کشور با بسته‌بندی ایمن و مراقب.', 80],
+                ['M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z', 'قیمت مناسب', 'بهترین قیمت‌ها با تخفیف‌های ویژه و برنامه وفاداری برای مشتریان دائمی ما.', 160],
+                ['M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z', 'پشتیبانی ۲۴/۷', 'تیم پشتیبانی ما شبانه‌روز آماده پاسخگویی به سوالات و رفع مشکلات شماست.', 240],
+                ['M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z', 'بهترین انتخاب', 'بیش از ۱۰,۰۰۰ عنوان کتاب در دسته‌بندی‌های متنوع با به‌روزرسانی مستمر.', 320],
+                ['M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z', 'نقد و معرفی', 'مقالات تخصصی و نقد ادبی برای کمک به انتخاب بهتر کتاب‌های مناسب شما.', 400],
+            ];
+            foreach ($values as $v): ?>
+            <div class="ab-vcard" data-aos="zoom-in" style="transition-delay:<?=$v[3]?>ms">
+                <div class="ab-vcard-glow"></div>
+                <div class="ab-vcard-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="<?=$v[0]?>"/></svg>
+                </div>
+                <h3><?=$v[1]?></h3>
+                <p><?=$v[2]?></p>
             </div>
-            <h3>ارسال سریع</h3>
-            <p>تحویل سفارش‌ها در کمتر از ۴۸ ساعت در سراسر کشور با بسته‌بندی ایمن.</p>
-        </div>
-        <div class="ab-vcard" data-aos="zoom-in" style="transition-delay:160ms">
-            <div class="ab-vcard-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/></svg>
-            </div>
-            <h3>قیمت مناسب</h3>
-            <p>بهترین قیمت‌ها با تخفیف‌های ویژه و برنامه وفاداری برای مشتریان دائمی.</p>
-        </div>
-        <div class="ab-vcard" data-aos="zoom-in" style="transition-delay:240ms">
-            <div class="ab-vcard-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"/></svg>
-            </div>
-            <h3>پشتیبانی ۲۴/۷</h3>
-            <p>تیم پشتیبانی ما شبانه‌روز آماده پاسخگویی به سوالات و رفع مشکلات شماست.</p>
-        </div>
-        <div class="ab-vcard" data-aos="zoom-in" style="transition-delay:320ms">
-            <div class="ab-vcard-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/></svg>
-            </div>
-            <h3>بهترین انتخاب</h3>
-            <p>بیش از ۱۰,۰۰۰ عنوان کتاب در دسته‌بندی‌های متنوع با به‌روزرسانی مستمر.</p>
-        </div>
-        <div class="ab-vcard" data-aos="zoom-in" style="transition-delay:400ms">
-            <div class="ab-vcard-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z"/></svg>
-            </div>
-            <h3>نقد و معرفی</h3>
-            <p>مقالات تخصصی و نقد ادبی برای کمک به انتخاب بهتر کتاب‌های مناسب شما.</p>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
@@ -514,87 +420,130 @@ require_once("./include/header.php");
             </div>
             <div class="ab-stat" data-aos="fade-up" style="transition-delay:300ms">
                 <span class="ab-stat-icon">⭐</span>
-                <span class="ab-stat-num" data-target="48" data-decimal="true">0</span>
-                <span class="ab-stat-lbl">رضایت مشتریان از ۵</span>
+                <span class="ab-stat-num" data-target="49" data-decimal="true">0</span>
+                <span class="ab-stat-lbl">رضایت از ۵</span>
             </div>
         </div>
     </div>
 
     <!-- ── TEAM ── -->
     <section class="ab-sec">
-        <div class="ab-sh" data-aos="fade-up">
-            <svg class="ab-sh-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16,13C15.71,13 15.38,13 15.03,13.05C16.19,13.89 17,15 17,16.5V19H23V16.5C23,14.17 18.33,13 16,13M8,13C5.67,13 1,14.17 1,16.5V19H15V16.5C15,14.17 10.33,13 8,13M8,11A3,3 0 0,0 11,8A3,3 0 0,0 8,5A3,3 0 0,0 5,8A3,3 0 0,0 8,11M16,11A3,3 0 0,0 19,8A3,3 0 0,0 16,5A3,3 0 0,0 13,8A3,3 0 0,0 16,11Z"/></svg>
-            <h2 class="ab-sh-title">تیم ما</h2>
+        <div style="text-align:center;margin-bottom:3rem" data-aos="fade-up">
+            <div class="ab-lbl" style="justify-content:center">تیم ما</div>
+            <h2 class="ab-sec-title">افرادی که کتاب‌نت را می‌سازند</h2>
         </div>
         <div class="ab-team-grid">
             <?php
             $team = [
-                ['👨‍💼', 'علی احمدی',    'مدیر عامل',   'با بیش از ۱۵ سال تجربه در صنعت نشر و کتاب'],
-                ['👩‍💻', 'سارا محمدی',   'مدیر فنی',    'متخصص در توسعه پلتفرم‌های آنلاین'],
-                ['👨‍🎨', 'رضا کریمی',    'مدیر محتوا',  'مسئول انتخاب و تأمین بهترین کتاب‌ها'],
-                ['👩‍📋', 'نازنین رضایی', 'مدیر پشتیبانی','متخصص در خدمات مشتریان و تجربه کاربری'],
+                ['👨‍💼', 'علی احمدی',    'مدیر عامل',    'با ۱۵ سال تجربه در صنعت نشر و کتاب'],
+                ['👩‍💻', 'سارا محمدی',   'مدیر فنی',     'متخصص در توسعه پلتفرم‌های آنلاین'],
+                ['👨‍🎨', 'رضا کریمی',    'مدیر محتوا',   'مسئول انتخاب و تأمین بهترین کتاب‌ها'],
+                ['👩‍📋', 'نازنین رضایی', 'مدیر پشتیبانی','متخصص در خدمات مشتریان و UX'],
             ];
             foreach ($team as $i => $m): ?>
-            <div class="ab-tcard" data-aos="flip-up" style="transition-delay:<?= $i * 80 ?>ms">
-                <div class="ab-tav"><?= $m[0] ?></div>
-                <h3><?= $m[1] ?></h3>
-                <span class="ab-trole"><?= $m[2] ?></span>
-                <p class="ab-tdesc"><?= $m[3] ?></p>
+            <div class="ab-tcard" data-aos="fade-up" style="transition-delay:<?=$i*80?>ms">
+                <div class="ab-tav"><?=$m[0]?></div>
+                <h3><?=$m[1]?></h3>
+                <span class="ab-trole"><?=$m[2]?></span>
+                <p class="ab-tdesc"><?=$m[3]?></p>
                 <div class="ab-tcard-socials">
-                    <a href="#" class="ab-tsocial" title="لینکدین">in</a>
-                    <a href="#" class="ab-tsocial" title="توییتر">𝕏</a>
-                    <a href="#" class="ab-tsocial" title="ایمیل">@</a>
+                    <a href="#" class="ab-tsocial">in</a>
+                    <a href="#" class="ab-tsocial">𝕏</a>
+                    <a href="#" class="ab-tsocial">@</a>
                 </div>
             </div>
             <?php endforeach; ?>
         </div>
     </section>
 
-    <!-- ── CONTACT ── -->
+    <!-- ══════════════════════════════════════════
+         MAP + CONTACT
+         ══════════════════════════════════════════ -->
     <div class="ab-contact" data-aos="fade-up">
         <div class="ab-contact-head">
             <div class="ab-lbl">تماس با ما</div>
             <h2>با ما در ارتباط باشید</h2>
             <p>سوال، پیشنهاد یا انتقادی دارید؟ دوست داریم از شما بشنویم!</p>
         </div>
-        <div class="ab-contact-grid">
+
+        <!-- نقشه موقعیت مکانی -->
+        <div class="ab-map-section" data-aos="zoom-in">
+            <div class="ab-map-wrap">
+                <!-- هدر نقشه -->
+                <div class="ab-map-header">
+                    <div class="ab-map-header-left">
+                        <div class="ab-map-pin-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg>
+                        </div>
+                        <div>
+                            <div class="ab-map-title">موقعیت مکانی کتاب‌نت</div>
+                            <div class="ab-map-addr">تهران، خیابان ولیعصر، پلاک ۲۴۵</div>
+                        </div>
+                    </div>
+                    <a href="https://maps.google.com/?q=تهران+خیابان+ولیعصر" target="_blank" class="ab-map-open-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/></svg>
+                        باز کردن در نقشه
+                    </a>
+                </div>
+
+                <!-- نقشه OpenStreetMap — بدون نیاز به API Key -->
+                <div class="ab-map-iframe-wrap">
+                    <iframe
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=51.36,35.68,51.44,35.74&layer=mapnik&marker=35.715,51.404"
+                        loading="lazy"
+                        allowfullscreen
+                        title="موقعیت کتاب‌نت روی نقشه">
+                    </iframe>
+                </div>
+
+                <!-- اطلاعات کوتاه -->
+                <div class="ab-map-info">
+                    <div class="ab-map-info-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg>
+                        <span>تهران، خیابان ولیعصر، پلاک ۲۴۵</span>
+                    </div>
+                    <div class="ab-map-info-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/></svg>
+                        <span>شنبه تا پنج‌شنبه · <strong>۹ صبح تا ۶ عصر</strong></span>
+                    </div>
+                    <div class="ab-map-info-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
+                        <span><strong>۰۲۱-۱۲۳۴۵۶۷</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- اطلاعات تماس -->
+        <div class="ab-contact-grid" style="margin-top:1.5rem">
             <div class="ab-citem">
                 <div class="ab-citem-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
                 </div>
-                <div>
-                    <strong>تلفن تماس</strong>
-                    <span>۰۲۱-۱۲۳۴۵۶۷</span>
-                </div>
+                <div><strong>تلفن تماس</strong><span>۰۲۱-۱۲۳۴۵۶۷</span></div>
             </div>
             <div class="ab-citem">
                 <div class="ab-citem-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/></svg>
                 </div>
-                <div>
-                    <strong>ایمیل</strong>
-                    <span>info@ketabnet.ir</span>
-                </div>
+                <div><strong>ایمیل</strong><span>info@ketabnet.ir</span></div>
             </div>
             <div class="ab-citem">
                 <div class="ab-citem-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg>
                 </div>
-                <div>
-                    <strong>آدرس</strong>
-                    <span>تهران، خیابان ولیعصر</span>
-                </div>
+                <div><strong>آدرس</strong><span>تهران، خیابان ولیعصر، پلاک ۲۴۵</span></div>
             </div>
         </div>
     </div>
 
-    <!-- ── CTA BANNER ── -->
+    <!-- ── CTA ── -->
     <div class="ab-cta" data-aos="zoom-in">
         <div class="ab-cta-in">
-            <div class="ab-lbl" style="justify-content:center;color:rgba(255,255,255,.7)">
-                <span style="background:rgba(255,255,255,.4)"></span>
+            <div class="ab-lbl" style="justify-content:center;color:rgba(255,255,255,.6)">
+                <span style="background:rgba(255,255,255,.35)"></span>
                 همین حالا شروع کنید
-                <span style="background:rgba(255,255,255,.4)"></span>
+                <span style="background:rgba(255,255,255,.35)"></span>
             </div>
             <h2>آماده‌اید اولین خریدتان را کنید؟</h2>
             <p>بیش از ۱۰,۰۰۰ کتاب منتظر شما هستند</p>
@@ -611,7 +560,7 @@ require_once("./include/header.php");
         </div>
     </div>
 
-</div><!-- /pw -->
+</div>
 
 <?php require_once("./include/footer.php"); ?>
 
@@ -620,36 +569,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* AOS */
     var ao = new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-            if (e.isIntersecting) e.target.classList.add('aos-animate');
-        });
+        es.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('aos-animate'); });
     }, { threshold: .1, rootMargin: '0px 0px -60px 0px' });
     document.querySelectorAll('[data-aos]').forEach(function (el) { ao.observe(el); });
 
     /* Counter Animation */
     var counters = document.querySelectorAll('.ab-stat-num[data-target]');
     var counted  = false;
-
     function runCounters() {
         if (counted) return;
         var statsEl = document.querySelector('.ab-stats');
         if (!statsEl) return;
         var rect = statsEl.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
+        if (rect.top < window.innerHeight - 80) {
             counted = true;
             counters.forEach(function (el) {
                 var target  = parseInt(el.dataset.target, 10);
                 var decimal = el.dataset.decimal === 'true';
-                var steps   = 60;
-                var step    = 0;
-                var timer   = setInterval(function () {
+                var steps = 60, step = 0;
+                var timer = setInterval(function () {
                     step++;
                     var val = Math.round((target / steps) * step);
-                    if (decimal) {
-                        el.textContent = (val / 10).toFixed(1);
-                    } else {
-                        el.textContent = val.toLocaleString('fa-IR');
-                    }
+                    if (decimal) el.textContent = (val / 10).toFixed(1);
+                    else         el.textContent = val.toLocaleString('fa-IR');
                     if (step >= steps) {
                         clearInterval(timer);
                         if (decimal) el.textContent = (target / 10).toFixed(1);
@@ -659,7 +601,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
-
     window.addEventListener('scroll', runCounters, { passive: true });
     runCounters();
 
