@@ -1,6 +1,7 @@
 <?php
 require_once("./include/header.php");
-
+#3b82f6
+// linear-gradient(90deg,#1d4ed8,#3b82f6);
 $category_id = isset($_GET['category']) ? filter_var($_GET['category'], FILTER_VALIDATE_INT) : null;
 
 if ($category_id) {
@@ -48,7 +49,7 @@ function calcDisc($o, $n)  { return $o > 0 ? round((($o - $n) / $o) * 100) : 0; 
   --flash-right-bg: #f8fafc;
 
   /* countdown */
-  --cd-box-bg:   rgba(29,78,216,.08);
+  --cd-box-bg:   rgba(255, 255, 255, 0.88);
   --cd-box-brd:  rgba(29,78,216,.18);
   --cd-val-c:    #1d4ed8;
   --cd-lbl2-c:   #3b82f6;
@@ -244,17 +245,6 @@ body { background: var(--body-bg) !important; color: var(--tx) !important; trans
   padding:.35rem .7rem;border-radius:9px;font-size:.78rem;font-weight:800;
   box-shadow:0 4px 14px rgba(239,68,68,.4);
 }
-.pcard-wish{
-  position:absolute;top:11px;left:11px;z-index:5;
-  width:34px;height:34px;border-radius:50%;
-  background:var(--card);
-  border:1px solid var(--cardbrd);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--tx2);transition:all .3s;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
-}
-.pcard-wish:hover,.pcard-wish.on{color:#f43f5e;transform:scale(1.15)}
-.pcard-wish svg{width:15px;height:15px}
 
 .pcard-ov{
   position:absolute;inset:0;
@@ -553,9 +543,6 @@ body { background: var(--body-bg) !important; color: var(--tx) !important; trans
             <div class="pcard-img">
               <img src="./upload/products/<?= escape($p['pic']) ?>" alt="<?= escape($p['name']) ?>" loading="lazy">
               <?php if ($disc>0): ?><span class="pcard-disc"><?= $disc ?>% تخفیف</span><?php endif; ?>
-              <button class="pcard-wish" data-id="<?= $p['id'] ?>">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </button>
               <div class="pcard-ov"><a href="single_product.php?product=<?= $p['id'] ?>" class="pcard-qv">مشاهده سریع</a></div>
             </div>
             <div class="pcard-body">
@@ -734,20 +721,6 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('cd-s').textContent=String(Math.floor(d/1000%60)).padStart(2,'0');
   }
   cdTick();setInterval(cdTick,1000);
-
-  /* Wishlist */
-  document.querySelectorAll('.pcard-wish').forEach(function(btn){
-    var k='wish_'+btn.dataset.id;
-    if(localStorage.getItem(k)){btn.classList.add('on');btn.querySelector('svg').setAttribute('fill','#f43f5e');}
-    btn.addEventListener('click',function(e){
-      e.preventDefault();e.stopPropagation();
-      btn.classList.toggle('on');
-      var on=btn.classList.contains('on');
-      btn.querySelector('svg').setAttribute('fill',on?'#f43f5e':'none');
-      on?localStorage.setItem(k,'1'):localStorage.removeItem(k);
-      toast(on?'❤️ به علاقه‌مندی‌ها اضافه شد':'🤍 از علاقه‌مندی‌ها حذف شد');
-    });
-  });
 
   /* Testimonials */
   var track=document.getElementById('testiTrack');

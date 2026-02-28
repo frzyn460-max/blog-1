@@ -110,7 +110,7 @@ body.dark-mode .pst-sb-in:focus-within {
 .pst-cats { display: flex; gap: .6rem; flex-wrap: wrap; }
 .pst-cat { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem 1.1rem; border-radius: 50px; border: 1.5px solid var(--border-color); background: transparent; color: var(--text-secondary); font-family: inherit; font-size: .83rem; font-weight: 600; cursor: pointer; transition: all .3s; text-decoration: none; white-space: nowrap; }
 .pst-cat:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
-.pst-cat.on { background: var(--accent-primary); border-color: var(--accent-primary); color: #fff; box-shadow: 0 4px 14px rgba(37,99,235,.25); }
+.pst-cat.on { background: #3b82f6; border-color: var(--accent-primary); color: #fff; box-shadow: 0 4px 14px rgba(37,99,235,.25); }
 .pst-cat .cc { background: rgba(255,255,255,.25); border-radius: 20px; padding: .08rem .42rem; font-size: .7rem; font-weight: 700; line-height: 1.4; }
 .pst-cat:not(.on) .cc { background: var(--bg-secondary); color: var(--text-secondary); }
 .pst-ctrl { display: flex; gap: .75rem; align-items: flex-end; }
@@ -132,7 +132,7 @@ body.dark-mode .pst-sb-in:focus-within {
 .pst-tinfo strong { color: var(--text-primary); }
 .pst-vbtns { display: flex; gap: .4rem; }
 .pst-vbtn { width: 36px; height: 36px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--bg-primary); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .3s; }
-.pst-vbtn:hover, .pst-vbtn.on { background: var(--accent-primary); border-color: var(--accent-primary); color: #fff; }
+.pst-vbtn:hover, .pst-vbtn.on { background: #3b82f6; border-color: var(--accent-primary); color: #fff; }
 .pst-vbtn svg { width: 16px; height: 16px; }
 
 /* ── POSTS GRID ── */
@@ -164,8 +164,8 @@ body.dark-mode .pst-sb-in:focus-within {
 .pst-excerpt { color: var(--text-secondary); font-size: .9rem; line-height: 1.8; flex: 1; margin-bottom: 1.25rem; }
 .pst-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border-color); }
 .pst-author { display: flex; align-items: center; gap: .55rem; color: var(--text-secondary); font-size: .84rem; }
-.pst-av { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .82rem; flex-shrink: 0; }
-.pst-rm { display: flex; align-items: center; gap: .3rem; color: var(--accent-primary); text-decoration: none; font-weight: 700; font-size: .84rem; transition: gap .3s; }
+.pst-av { width: 30px; height: 30px; border-radius: 50%; background:linear-gradient(90deg,#1d4ed8,#3b82f6); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .82rem; flex-shrink: 0; }
+.pst-rm { display: flex; align-items: center; gap: .3rem; color: #3b82f6; text-decoration: none; font-weight: 700; font-size: .84rem; transition: gap .3s; }
 .pst-rm:hover { gap: .6rem; }
 .pst-rm svg { width: 15px; height: 15px; }
 
